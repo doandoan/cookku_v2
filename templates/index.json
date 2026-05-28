@@ -132,7 +132,8 @@
       },
       "block_order": ["kitchen", "home_tools", "baby_gifts"],
       "settings": {
-        "title": "Shop by Category",
+        "eyebrow_text": "Three core collections",
+        "title": "Shop by <em>category</em>",
         "heading_size": "h2",
         "image_ratio": "square",
         "image_shape": "default",
@@ -147,10 +148,11 @@
     "featured_products": {
       "type": "featured-collection",
       "settings": {
-        "title": "Featured <em>This Week</em>",
+        "eyebrow_text": "Our most-loved tools",
+        "title": "Featured <em>this week</em>",
         "heading_size": "h2",
-        "description": "Our most-loved tools, chosen for real US homes.",
-        "show_description": true,
+        "description": "",
+        "show_description": false,
         "description_style": "body",
         "collection": "best-sellers",
         "products_to_show": 3,
@@ -165,7 +167,7 @@
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
-        "show_rating": false,
+        "show_rating": true,
         "quick_add": "none",
         "columns_mobile": "2",
         "padding_top": 36,
