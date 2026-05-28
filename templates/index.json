@@ -3,17 +3,25 @@
     "image_banner": {
       "type": "image-banner",
       "blocks": {
+        "eyebrow": {
+          "type": "text",
+          "settings": {
+            "text": "<span class=\"ck-eyebrow\">Make Your Home Smarter</span>",
+            "text_style": "subtitle"
+          }
+        },
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Smart tools for the modern American home",
+            "heading": "Smart tools for the <em>modern American home</em>",
             "heading_size": "h0"
           }
         },
-        "text": {
+        "subtext": {
           "type": "text",
           "settings": {
-            "text": "Hand-picked kitchen, home, and baby essentials — designed to simplify everyday life. Free US shipping. 30-day guarantee."
+            "text": "Hand-picked kitchen, home, and baby essentials — designed to simplify everyday life. Free US shipping. 30-day guarantee.",
+            "text_style": "body"
           }
         },
         "buttons": {
@@ -26,9 +34,16 @@
             "button_link_2": "shopify://pages/about-us",
             "button_style_secondary_2": true
           }
+        },
+        "sub_cta": {
+          "type": "text",
+          "settings": {
+            "text": "Free shipping • No code needed",
+            "text_style": "subtitle"
+          }
         }
       },
-      "block_order": ["heading", "text", "buttons"],
+      "block_order": ["eyebrow", "heading", "subtext", "buttons", "sub_cta"],
       "settings": {
         "image_overlay_opacity": 30,
         "image_height": "large",
@@ -50,33 +65,29 @@
         "col1": {
           "type": "column",
           "settings": {
-            "heading": "🚚 Free US Shipping",
-            "text": "<p>On every order, no minimums</p>",
-            "column_alignment": "center"
+            "title": "🚚 Free US Shipping",
+            "text": "<p>On every order, no minimums</p>"
           }
         },
         "col2": {
           "type": "column",
           "settings": {
-            "heading": "🛡️ 30-Day Returns",
-            "text": "<p>Risk-free guarantee</p>",
-            "column_alignment": "center"
+            "title": "🛡️ 30-Day Returns",
+            "text": "<p>Risk-free guarantee</p>"
           }
         },
         "col3": {
           "type": "column",
           "settings": {
-            "heading": "🔒 Secure Checkout",
-            "text": "<p>SSL encrypted payments</p>",
-            "column_alignment": "center"
+            "title": "🔒 Secure Checkout",
+            "text": "<p>SSL encrypted payments</p>"
           }
         },
         "col4": {
           "type": "column",
           "settings": {
-            "heading": "✨ Hand-Picked",
-            "text": "<p>Quality tested for US homes</p>",
-            "column_alignment": "center"
+            "title": "✨ Hand-Picked",
+            "text": "<p>Quality tested for US homes</p>"
           }
         }
       },
@@ -86,6 +97,8 @@
         "heading_size": "h3",
         "image_width": "third",
         "background_style": "none",
+        "column_alignment": "center",
+        "columns_desktop": 4,
         "button_label": "",
         "button_link": "",
         "color_scheme": "scheme-1",
@@ -134,7 +147,7 @@
     "featured_products": {
       "type": "featured-collection",
       "settings": {
-        "title": "Featured This Week",
+        "title": "Featured <em>This Week</em>",
         "heading_size": "h2",
         "description": "Our most-loved tools, chosen for real US homes.",
         "show_description": true,
@@ -165,7 +178,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Tools that actually work — every time",
+            "heading": "Tools that <em>actually</em> work — every time",
             "heading_size": "h2"
           }
         },
@@ -232,25 +245,22 @@
         "col1": {
           "type": "column",
           "settings": {
-            "heading": "✓ Hand-picked Products",
-            "text": "<p>Every item personally selected and tested for real US homes.</p>",
-            "column_alignment": "center"
+            "title": "✓ Hand-picked Products",
+            "text": "<p>Every item personally selected and tested for real US homes.</p>"
           }
         },
         "col2": {
           "type": "column",
           "settings": {
-            "heading": "📦 Free US Shipping",
-            "text": "<p>No minimums, no hidden fees. Delivered to your door, on us.</p>",
-            "column_alignment": "center"
+            "title": "📦 Free US Shipping",
+            "text": "<p>No minimums, no hidden fees. Delivered to your door, on us.</p>"
           }
         },
         "col3": {
           "type": "column",
           "settings": {
-            "heading": "↩️ 30-Day Guarantee",
-            "text": "<p>Not satisfied? Email us for a full refund — no questions asked.</p>",
-            "column_alignment": "center"
+            "title": "↩️ 30-Day Guarantee",
+            "text": "<p>Not satisfied? Email us for a full refund — no questions asked.</p>"
           }
         }
       },
@@ -260,6 +270,8 @@
         "heading_size": "h2",
         "image_width": "third",
         "background_style": "none",
+        "column_alignment": "center",
+        "columns_desktop": 3,
         "button_label": "",
         "button_link": "",
         "color_scheme": "scheme-2",
@@ -275,7 +287,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Get 10% Off Your First Order",
+            "heading": "Get 10% Off <em>Your First Order</em>",
             "heading_size": "h2"
           }
         },

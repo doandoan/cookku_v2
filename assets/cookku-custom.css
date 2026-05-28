@@ -947,6 +947,177 @@ p { color: var(--ck-text-muted); }
   .ck-how-grid { grid-template-columns: 1fr; gap: 12px; }
 }
 
+/* ============== 18. TRUST BADGE ROW (multicolumn, no heading) ============== */
+.multicolumn.no-heading .page-width {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  max-width: 100% !important;
+}
+.multicolumn.no-heading .multicolumn-list {
+  gap: 0 !important;
+  border-top: 1px solid var(--ck-border);
+  border-bottom: 1px solid var(--ck-border);
+}
+.multicolumn.no-heading .multicolumn-list__item {
+  border-right: 1px solid var(--ck-border);
+  padding: 24px 12px !important;
+}
+.multicolumn.no-heading .multicolumn-list__item:last-child {
+  border-right: none;
+}
+.multicolumn.no-heading .multicolumn-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.multicolumn.no-heading .multicolumn-card__info h3.inline-richtext {
+  font-family: var(--ck-font-body) !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--ck-text) !important;
+  margin: 0 0 5px;
+  line-height: 1.4;
+}
+.multicolumn.no-heading .multicolumn-card__info .rte p {
+  font-size: 11px !important;
+  color: var(--ck-text-light) !important;
+  margin: 0 !important;
+}
+@media (max-width: 749px) {
+  .multicolumn.no-heading .multicolumn-list__item:nth-child(2) {
+    border-right: none;
+  }
+  .multicolumn.no-heading .multicolumn-list__item:nth-child(1),
+  .multicolumn.no-heading .multicolumn-list__item:nth-child(2) {
+    border-bottom: 1px solid var(--ck-border);
+  }
+}
+
+/* ============== 19. WHY COOKKU CARDS (scheme-2 multicolumn with heading) ============== */
+.color-scheme-2 .multicolumn-card.content-container {
+  background: var(--ck-bg) !important;
+  border-radius: 12px !important;
+  padding: 30px 22px !important;
+  border: 1px solid var(--ck-border) !important;
+  box-shadow: none !important;
+}
+.color-scheme-2 .multicolumn-card__info h3.inline-richtext {
+  font-family: var(--ck-font-body) !important;
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  color: var(--ck-text) !important;
+  letter-spacing: 0.3px;
+  margin: 0 0 8px;
+}
+.color-scheme-2 .multicolumn-card__info .rte p {
+  font-size: 13px !important;
+  color: var(--ck-text-muted) !important;
+  line-height: 1.6;
+  margin: 0 !important;
+}
+
+/* ============== 20. BRAND QUOTE / RICH-TEXT (dark scheme-5) ============== */
+.color-scheme-5 .rich-text__text p,
+.color-scheme-5 .rich-text__text em {
+  font-family: var(--ck-font-display) !important;
+  font-style: italic;
+  font-size: clamp(18px, 2.8vw, 26px) !important;
+  line-height: 1.65;
+  color: var(--ck-bg) !important;
+}
+.color-scheme-5 .rich-text__wrapper {
+  max-width: 680px;
+  margin: 0 auto;
+}
+.color-scheme-5 .rich-text__caption {
+  color: var(--ck-gold-light) !important;
+  font-size: 11px !important;
+  letter-spacing: 2.5px !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  margin-top: 12px;
+}
+
+/* ============== 21. HERO BANNER EXTRAS ============== */
+/* Eyebrow inside banner */
+.banner__text .ck-eyebrow { margin: 0; }
+/* Sub-CTA text below buttons */
+.banner__text.subtitle {
+  font-size: 11px !important;
+  color: var(--ck-text-lighter) !important;
+  letter-spacing: 0.5px;
+  margin-top: 2px !important;
+}
+
+/* ============== 22. COLLECTION-LIST CATEGORY CARDS ============== */
+/* Alternating colored placeholders when no image set */
+.collection-list .grid__item:nth-child(1) .card__media.placeholder,
+.collection-list .grid__item:nth-child(1) .card__inner {
+  background: var(--ck-bg-coral) !important;
+}
+.collection-list .grid__item:nth-child(2) .card__media.placeholder,
+.collection-list .grid__item:nth-child(2) .card__inner {
+  background: var(--ck-bg-sage) !important;
+}
+.collection-list .grid__item:nth-child(3) .card__media.placeholder,
+.collection-list .grid__item:nth-child(3) .card__inner {
+  background: var(--ck-bg-pink) !important;
+}
+/* Category card text */
+.collection-list .card__heading { font-size: 14px !important; letter-spacing: 1px; text-transform: uppercase; }
+
+/* ============== 23. IMAGE-WITH-TEXT (brand story) ============== */
+.image-with-text .image-with-text__content {
+  justify-content: center;
+}
+.image-with-text .image-with-text__heading {
+  font-size: clamp(22px, 3vw, 32px) !important;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+.image-with-text .image-with-text__text.rte p {
+  color: var(--ck-text-muted) !important;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+/* ============== 24. EMAIL SIGNUP BANNER ============== */
+.email-signup-banner .email-signup-banner__heading {
+  font-family: var(--ck-font-display) !important;
+  font-weight: 500 !important;
+}
+.email-signup-banner__field-wrapper input {
+  background: var(--ck-bg) !important;
+  border: 1px solid var(--ck-border) !important;
+  border-radius: 6px 0 0 6px !important;
+  font-size: 13px;
+}
+.email-signup-banner__field-wrapper .button {
+  border-radius: 0 6px 6px 0 !important;
+}
+
+/* ============== 25. MOBILE FULL RESPONSIVE ============== */
+@media (max-width: 749px) {
+  /* Trust row 2x2 on mobile */
+  .multicolumn.no-heading .multicolumn-list {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  /* Category grid 1 col on mobile */
+  .collection-list .grid--3-col-desktop { grid-template-columns: 1fr !important; }
+  /* Product grid 2 col on mobile */
+  .featured-collection .grid--3-col-desktop { grid-template-columns: repeat(2, 1fr) !important; }
+  /* Hero: tighter padding */
+  .banner__content { padding: 28px 16px !important; }
+  .banner__heading { font-size: clamp(26px, 8vw, 36px) !important; }
+  /* Why cookku 1 col on mobile */
+  .color-scheme-2 .multicolumn-list { grid-template-columns: 1fr !important; }
+  /* Image with text: stack vertically */
+  .image-with-text__grid { grid-template-columns: 1fr !important; }
+}
+
 /* ============== 17. UTILITY CLASSES ============== */
 .ck-text-coral { color: var(--ck-coral) !important; }
 .ck-text-sage { color: var(--ck-sage) !important; }
