@@ -1118,6 +1118,26 @@ p { color: var(--ck-text-muted); }
   .image-with-text__grid { grid-template-columns: 1fr !important; }
 }
 
+/* ============== 26. TABLER ICON STYLING ============== */
+/* Trust badge icons */
+.ck-trust-icon {
+  font-size: 26px !important;
+  color: var(--ck-gold) !important;
+  display: block;
+  margin: 0 auto 10px;
+  line-height: 1;
+}
+/* Why Cookku icons */
+.ck-why-icon {
+  font-size: 34px !important;
+  color: var(--ck-gold) !important;
+  display: block;
+  margin: 0 auto 14px;
+  line-height: 1;
+}
+/* Ensure inline-richtext renders HTML in multicolumn title */
+.multicolumn-card__info h3.inline-richtext br { display: block; }
+
 /* ============== 17. UTILITY CLASSES ============== */
 .ck-text-coral { color: var(--ck-coral) !important; }
 .ck-text-sage { color: var(--ck-sage) !important; }
