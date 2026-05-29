@@ -1,0 +1,56 @@
+{{ 'cookku-product.css' | asset_url | stylesheet_tag }}
+
+<section class="ck-guarantees">
+  <div class="ck-section-inner">
+    <div class="ck-guarantees__header">
+      {% if section.settings.eyebrow != blank %}
+        <p class="ck-section-eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h2 class="ck-section-title">
+        {{ section.settings.title_before }} <em>{{ section.settings.title_em }}</em>
+      </h2>
+    </div>
+    <div class="ck-guarantees__grid">
+      {% for block in section.blocks %}
+        <div class="ck-guarantee-card" {{ block.shopify_attributes }}>
+          <span class="ck-guarantee-card__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+          <p class="ck-guarantee-card__title">{{ block.settings.title }}</p>
+          <p class="ck-guarantee-card__desc">{{ block.settings.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cookku Product Guarantees",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "THE COOKKU PROMISE" },
+    { "type": "text", "id": "title_before", "label": "Title — before italic", "default": "Backed by" },
+    { "type": "text", "id": "title_em", "label": "Title — italic word", "default": "real guarantees" }
+  ],
+  "blocks": [
+    {
+      "type": "guarantee",
+      "name": "Guarantee",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "🚚" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Free Shipping" },
+        { "type": "text", "id": "description", "label": "Description", "default": "On every order" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cookku Product Guarantees",
+      "blocks": [
+        { "type": "guarantee", "settings": { "icon": "🚚", "title": "Free Shipping", "description": "On every order" } },
+        { "type": "guarantee", "settings": { "icon": "♻️", "title": "30-Day Returns", "description": "Hassle-free" } },
+        { "type": "guarantee", "settings": { "icon": "🔒", "title": "Secure Checkout", "description": "SSL secured" } },
+        { "type": "guarantee", "settings": { "icon": "⭐", "title": "Hand-Picked", "description": "Quality tested" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

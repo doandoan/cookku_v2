@@ -1,1 +1,158 @@
-{"sections":{"main":{"type":"main-product","blocks":{"vendor":{"type":"text","settings":{"text":"{{ product.vendor }}","text_style":"uppercase"}},"title":{"type":"title","settings":{}},"price":{"type":"price","settings":{}},"variant_picker":{"type":"variant_picker","settings":{"picker_type":"button","swatch_shape":"circle"}},"quantity_selector":{"type":"quantity_selector","settings":{}},"buy_buttons":{"type":"buy_buttons","settings":{"show_dynamic_checkout":true,"show_gift_card_recipient":true}},"description":{"type":"description","settings":{}},"share":{"type":"share","settings":{"share_label":"Share"}}},"block_order":["vendor","title","price","variant_picker","quantity_selector","buy_buttons","description","share"],"settings":{"enable_sticky_info":true,"color_scheme":"scheme-1","media_size":"large","constrain_to_viewport":true,"media_fit":"contain","gallery_layout":"stacked","mobile_thumbnails":"hide","media_position":"left","image_zoom":"lightbox","hide_variants":true,"enable_video_looping":false,"padding_top":36,"padding_bottom":12}},"related-products":{"type":"related-products","settings":{"heading":"You may also like","heading_size":"h2","products_to_show":4,"columns_desktop":4,"columns_mobile":"2","color_scheme":"scheme-1","image_ratio":"square","image_shape":"default","show_secondary_image":true,"show_vendor":false,"show_rating":false,"padding_top":36,"padding_bottom":28}}},"order":["main","related-products"]}
+{
+  "sections": {
+    "ck-main-product": {
+      "type": "cookku-main-product",
+      "blocks": {
+        "bullet-1": { "type": "bullet", "settings": { "text": "Pure juice in 3 seconds, no seeds, no pulp" } },
+        "bullet-2": { "type": "bullet", "settings": { "text": "Heavy-duty aluminum, built to last" } },
+        "bullet-3": { "type": "bullet", "settings": { "text": "Works for lemon, lime, orange, pomegranate" } },
+        "bullet-4": { "type": "bullet", "settings": { "text": "Rinse-clean in seconds; no electricity needed" } }
+      },
+      "block_order": ["bullet-1", "bullet-2", "bullet-3", "bullet-4"],
+      "settings": {
+        "eyebrow": "COOKKU KITCHEN",
+        "show_buy_now": true
+      }
+    },
+    "ck-features": {
+      "type": "cookku-product-features",
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "icon": "⏱️", "title": "Pure juice in 3 seconds", "description": "Squeeze every drop. Perfect for drinks, dressings, and marinades." } },
+        "f2": { "type": "feature", "settings": { "icon": "💪", "title": "Heavy-duty aluminum", "description": "Solid single-piece alloy body with long-leverage handle. Maximum juice, minimum effort." } },
+        "f3": { "type": "feature", "settings": { "icon": "🔩", "title": "Built-in seed filter", "description": "Integrated mesh catches seeds and ensures pulp-free juice. No straining required." } },
+        "f4": { "type": "feature", "settings": { "icon": "🍸", "title": "Bartender-grade", "description": "Cocktails, mocktails, lemonades, marmalades. Restaurant flavor at home." } },
+        "f5": { "type": "feature", "settings": { "icon": "💧", "title": "Rinse-clean in seconds", "description": "No coils, batteries, or sticky parts. A quick rinse is all it takes." } },
+        "f6": { "type": "feature", "settings": { "icon": "🔇", "title": "No electricity, no noise", "description": "Squeeze anywhere — kitchen, dorm, RV. Compact and completely silent." } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4", "f5", "f6"],
+      "settings": {
+        "eyebrow": "WHY YOU'LL LOVE IT",
+        "title_before": "Six reasons it earns",
+        "title_em": "counter space"
+      }
+    },
+    "ck-philosophy": {
+      "type": "cookku-philosophy",
+      "settings": {
+        "eyebrow": "THE COOKKU KITCHEN",
+        "quote": "\"A small kitchen tool that quietly upgrades every meal — whether you're prepping dinner, mixing cocktails, or squeezing lime over Taco Tuesday.\"",
+        "attribution": "— MAKE YOUR HOME SMARTER"
+      }
+    },
+    "ck-how-it-works": {
+      "type": "cookku-product-how-it-works",
+      "blocks": {
+        "step1": { "type": "step", "settings": { "number": "1", "title": "CUT & LOAD", "description": "Place your fruit in half and put it cut-side down into the cup section." } },
+        "step2": { "type": "step", "settings": { "number": "2", "title": "PRESS & SQUEEZE", "description": "Push down the handle with smooth pressure. Watch fresh juice flow." } },
+        "step3": { "type": "step", "settings": { "number": "3", "title": "POUR & RINSE", "description": "Pour juice into your glass. Rinse the press clean. Done." } }
+      },
+      "block_order": ["step1", "step2", "step3"],
+      "settings": {
+        "eyebrow": "IN THREE SIMPLE STEPS",
+        "title_before": "How it",
+        "title_em": "works"
+      }
+    },
+    "ck-comparison": {
+      "type": "cookku-product-comparison",
+      "blocks": {
+        "row1": { "type": "row", "settings": { "feature": "Juice freshness", "col1_value": "Pure & fresh", "col1_check": true, "col2_value": "Oxidizes faster" } },
+        "row2": { "type": "row", "settings": { "feature": "Noise level", "col1_value": "None", "col1_check": false, "col2_value": "Loud" } },
+        "row3": { "type": "row", "settings": { "feature": "Cleaning time", "col1_value": "10 seconds", "col1_check": false, "col2_value": "5+ minutes" } },
+        "row4": { "type": "row", "settings": { "feature": "Power required", "col1_value": "None", "col1_check": true, "col2_value": "Cord & outlet" } },
+        "row5": { "type": "row", "settings": { "feature": "Counter space", "col1_value": "Compact", "col1_check": true, "col2_value": "Bulky" } },
+        "row6": { "type": "row", "settings": { "feature": "Seed filtering", "col1_value": "Built-in", "col1_check": true, "col2_value": "Manual straining" } }
+      },
+      "block_order": ["row1", "row2", "row3", "row4", "row5", "row6"],
+      "settings": {
+        "eyebrow": "THE DIFFERENCE IS CLEAR",
+        "title_before": "Manual press vs.",
+        "title_em": "electric juicer",
+        "col1_header": "FreshTaste™ Press",
+        "col2_header": "Electric Juicer"
+      }
+    },
+    "ck-guarantees": {
+      "type": "cookku-product-guarantees",
+      "blocks": {
+        "g1": { "type": "guarantee", "settings": { "icon": "🚚", "title": "Free Shipping", "description": "On every order" } },
+        "g2": { "type": "guarantee", "settings": { "icon": "♻️", "title": "30-Day Returns", "description": "Hassle-free" } },
+        "g3": { "type": "guarantee", "settings": { "icon": "🔒", "title": "Secure Checkout", "description": "SSL secured" } },
+        "g4": { "type": "guarantee", "settings": { "icon": "⭐", "title": "Hand-Picked", "description": "Quality tested" } }
+      },
+      "block_order": ["g1", "g2", "g3", "g4"],
+      "settings": {
+        "eyebrow": "THE COOKKU PROMISE",
+        "title_before": "Backed by",
+        "title_em": "real guarantees"
+      }
+    },
+    "ck-why": {
+      "type": "cookku-product-why",
+      "settings": {
+        "eyebrow": "THE COOKKU PROMISE",
+        "title_before": "Why",
+        "title_em": "Cookku?",
+        "body": "<p>At Cookku, we believe great homes don't need a thousand gadgets — just a few smart tools that work effortlessly, every day.</p><p>Every product is hand-picked, tested for real-life families, and backed by our 30-day guarantee. Make Your Home Smarter — one tool at a time.</p>",
+        "link_text": "Make Your Home Smarter →",
+        "link_url": "/"
+      }
+    },
+    "ck-specs": {
+      "type": "cookku-product-specs",
+      "blocks": {
+        "sp1": { "type": "spec", "settings": { "label": "Material", "value": "Heavy Duty Aluminum Alloy" } },
+        "sp2": { "type": "spec", "settings": { "label": "Color", "value": "Silver" } },
+        "sp3": { "type": "spec", "settings": { "label": "Dimensions", "value": "21.5 × 12.5 × 12.5 cm" } },
+        "sp4": { "type": "spec", "settings": { "label": "Weight", "value": "Approx. 320g" } },
+        "sp5": { "type": "spec", "settings": { "label": "Suitable for", "value": "Lemon, Lime, Orange, Pomegranate" } },
+        "sp6": { "type": "spec", "settings": { "label": "Cleaning", "value": "Hand-Wash, Rinse-Clean" } },
+        "sp7": { "type": "spec", "settings": { "label": "Power source", "value": "Manual (No Electricity Needed)" } },
+        "sp8": { "type": "spec", "settings": { "label": "Package includes", "value": "1× FreshTaste™ Metal Citrus Press" } }
+      },
+      "block_order": ["sp1", "sp2", "sp3", "sp4", "sp5", "sp6", "sp7", "sp8"],
+      "settings": {
+        "eyebrow": "PRODUCT DETAILS",
+        "title": "Specifications"
+      }
+    },
+    "ck-faq": {
+      "type": "cookku-product-faq",
+      "blocks": {
+        "faq1": { "type": "faq", "settings": { "question": "What fruits can I use with this press?", "answer": "Lemons, limes, oranges, pomegranates, grapefruits, and more. Cut larger fruits in half before pressing." } },
+        "faq2": { "type": "faq", "settings": { "question": "Does it really filter out seeds?", "answer": "Yes! The built-in seed filter prevents seeds and large pulp from entering your drink." } },
+        "faq3": { "type": "faq", "settings": { "question": "Is it hard to press? Will my hand get tired?", "answer": "Not at all. The long-leverage handle design multiplies your pressing force significantly." } },
+        "faq4": { "type": "faq", "settings": { "question": "How long does shipping take?", "answer": "Standard US shipping takes 3–5 business days. Expedited options are available at checkout." } },
+        "faq5": { "type": "faq", "settings": { "question": "What if I'm not satisfied?", "answer": "We offer a 30-day hassle-free return policy. Contact support@cookku.com and we'll make it right." } }
+      },
+      "block_order": ["faq1", "faq2", "faq3", "faq4", "faq5"],
+      "settings": {
+        "eyebrow": "GOT QUESTIONS?",
+        "title": "Frequently asked"
+      }
+    },
+    "ck-cta": {
+      "type": "cookku-product-cta",
+      "settings": {
+        "eyebrow": "FRESHTASTE™ KITCHEN",
+        "heading": "Fresh Juice, Zero Mess.",
+        "heading_em": "Pure Flavor.",
+        "subtext": "Bring restaurant-quality citrus juice to every meal — from morning brunch water to weekend cocktails.",
+        "button_label": "ADD TO CART — $19.99",
+        "trust_text": "🚚 Free US Shipping  |  ✓ 30-Day Guarantee  |  🔒 Secure Checkout"
+      }
+    }
+  },
+  "order": [
+    "ck-main-product",
+    "ck-features",
+    "ck-philosophy",
+    "ck-how-it-works",
+    "ck-comparison",
+    "ck-guarantees",
+    "ck-why",
+    "ck-specs",
+    "ck-faq",
+    "ck-cta"
+  ]
+}

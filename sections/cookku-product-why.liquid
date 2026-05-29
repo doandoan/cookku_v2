@@ -1,0 +1,44 @@
+{{ 'cookku-product.css' | asset_url | stylesheet_tag }}
+
+<section class="ck-why-cookku">
+  <div class="ck-why-cookku__inner">
+    {% if section.settings.eyebrow != blank %}
+      <p class="ck-why-cookku__eyebrow">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    <h2 class="ck-why-cookku__title">
+      {{ section.settings.title_before }} <em>{{ section.settings.title_em }}</em>
+    </h2>
+    {% if section.settings.body != blank %}
+      <div class="ck-why-cookku__body">{{ section.settings.body }}</div>
+    {% endif %}
+    {% if section.settings.link_text != blank %}
+      <a href="{{ section.settings.link_url }}" class="ck-why-cookku__link">
+        {{ section.settings.link_text }}
+      </a>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cookku Why Section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "THE COOKKU PROMISE" },
+    { "type": "text", "id": "title_before", "label": "Title — before italic", "default": "Why" },
+    { "type": "text", "id": "title_em", "label": "Title — italic word", "default": "Cookku?" },
+    {
+      "type": "richtext",
+      "id": "body",
+      "label": "Body text",
+      "default": "<p>At Cookku, we believe great homes don't need a thousand gadgets — just a few smart tools that work effortlessly, every day.</p><p>Every product is hand-picked, tested for real-life families, and backed by our 30-day guarantee. Make Your Home Smarter — one tool at a time.</p>"
+    },
+    { "type": "text", "id": "link_text", "label": "Link text", "default": "Make Your Home Smarter →" },
+    { "type": "url", "id": "link_url", "label": "Link URL" }
+  ],
+  "presets": [
+    {
+      "name": "Cookku Why Section"
+    }
+  ]
+}
+{% endschema %}

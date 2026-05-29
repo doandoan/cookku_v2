@@ -1,0 +1,77 @@
+{{ 'cookku-product.css' | asset_url | stylesheet_tag }}
+
+<section class="ck-comparison">
+  <div class="ck-section-inner">
+    <div class="ck-comparison__header">
+      {% if section.settings.eyebrow != blank %}
+        <p class="ck-section-eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h2 class="ck-section-title">
+        {{ section.settings.title_before }} <em>{{ section.settings.title_em }}</em>
+      </h2>
+    </div>
+    <div style="overflow-x: auto;">
+      <table class="ck-comparison__table">
+        <thead>
+          <tr>
+            <th style="width: 30%;">Feature</th>
+            <th class="ck-col-product">{{ section.settings.col1_header }}</th>
+            <th class="ck-col-competitor">{{ section.settings.col2_header }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for block in section.blocks %}
+            <tr {{ block.shopify_attributes }}>
+              <td>{{ block.settings.feature }}</td>
+              <td class="ck-col-product">
+                {% if block.settings.col1_check %}
+                  <span class="ck-check-yes">✓</span>
+                {% endif %}
+                {{ block.settings.col1_value }}
+              </td>
+              <td class="ck-col-competitor">{{ block.settings.col2_value }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cookku Comparison Table",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "THE DIFFERENCE IS CLEAR" },
+    { "type": "text", "id": "title_before", "label": "Title — before italic", "default": "Manual press vs." },
+    { "type": "text", "id": "title_em", "label": "Title — italic", "default": "electric juicer" },
+    { "type": "text", "id": "col1_header", "label": "Column 1 header (your product)", "default": "FreshTaste™ Press" },
+    { "type": "text", "id": "col2_header", "label": "Column 2 header (competitor)", "default": "Electric Juicer" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Comparison row",
+      "settings": [
+        { "type": "text", "id": "feature", "label": "Feature name", "default": "Feature" },
+        { "type": "text", "id": "col1_value", "label": "Your product value", "default": "Better" },
+        { "type": "checkbox", "id": "col1_check", "label": "Show ✓ checkmark", "default": true },
+        { "type": "text", "id": "col2_value", "label": "Competitor value", "default": "Worse" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cookku Comparison Table",
+      "blocks": [
+        { "type": "row", "settings": { "feature": "Juice freshness", "col1_value": "Pure & fresh", "col1_check": true, "col2_value": "Oxidizes faster" } },
+        { "type": "row", "settings": { "feature": "Noise level", "col1_value": "None", "col1_check": false, "col2_value": "Loud" } },
+        { "type": "row", "settings": { "feature": "Cleaning time", "col1_value": "10 seconds", "col1_check": false, "col2_value": "5+ minutes" } },
+        { "type": "row", "settings": { "feature": "Power required", "col1_value": "None", "col1_check": true, "col2_value": "Cord & outlet" } },
+        { "type": "row", "settings": { "feature": "Counter space", "col1_value": "Compact", "col1_check": true, "col2_value": "Bulky" } },
+        { "type": "row", "settings": { "feature": "Seed filtering", "col1_value": "Built-in", "col1_check": true, "col2_value": "Manual straining" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

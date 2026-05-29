@@ -1,0 +1,70 @@
+{{ 'cookku-product.css' | asset_url | stylesheet_tag }}
+
+<section class="ck-how-it-works">
+  <div class="ck-section-inner">
+    <div class="ck-how-it-works__header">
+      {% if section.settings.eyebrow != blank %}
+        <p class="ck-section-eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      <h2 class="ck-section-title">
+        {{ section.settings.title_before }} <em>{{ section.settings.title_em }}</em>
+      </h2>
+    </div>
+    <div class="ck-how-it-works__grid">
+      {% for block in section.blocks %}
+        <div class="ck-step-card" {{ block.shopify_attributes }}>
+          <div class="ck-step-card__number">{{ block.settings.number }}</div>
+          <h3 class="ck-step-card__title">{{ block.settings.title }}</h3>
+          <p class="ck-step-card__desc">{{ block.settings.description }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cookku How It Works",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "IN THREE SIMPLE STEPS"
+    },
+    {
+      "type": "text",
+      "id": "title_before",
+      "label": "Title — before italic",
+      "default": "How it"
+    },
+    {
+      "type": "text",
+      "id": "title_em",
+      "label": "Title — italic word",
+      "default": "works"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Step number", "default": "1" },
+        { "type": "text", "id": "title", "label": "Title", "default": "STEP TITLE" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Step description." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cookku How It Works",
+      "blocks": [
+        { "type": "step", "settings": { "number": "1", "title": "CUT & LOAD", "description": "Place your fruit in half and place it cut-side down into the cup section." } },
+        { "type": "step", "settings": { "number": "2", "title": "PRESS & SQUEEZE", "description": "Push down the handle with smooth pressure. Watch fresh juice flow." } },
+        { "type": "step", "settings": { "number": "3", "title": "POUR & RINSE", "description": "Pour juice into your glass. Rinse the press clean. Done." } }
+      ]
+    }
+  ]
+}
+{% endschema %}
