@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmd /c \"nvm list 2>&1\")",
+      "Read(//c/Users/Pc/Desktop/COOKKU/**)",
+      "Bash(powershell -Command \"Compress-Archive -Path 'cookku_v2\\\\*' -DestinationPath 'cookku_theme.zip' -Force\")"
+    ]
+  }
+}
