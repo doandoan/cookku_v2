@@ -99,14 +99,8 @@
 
               <a href="{{ product.url }}">
                 {% if product.featured_image %}
-                  {{
-                    product.featured_image
-                    | image_url: width: 500
-                    | image_tag:
-                      loading: 'lazy',
-                      alt: product.featured_image.alt | default: product.title | escape,
-                      width: 500
-                  }}
+                  {%- assign img_alt = product.featured_image.alt | default: product.title | escape -%}
+                  {{ product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: img_alt, width: 500 }}
                 {% else %}
                   <div class="ck-coll-card__img-placeholder">
                     [ {{ product.title | truncate: 20 }} ]
