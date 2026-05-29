@@ -1,5 +1,13 @@
 {{ 'cookku-product.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%}
+  Reads from metafield: custom.specs (JSON type)
+  Expected format: [{"label":"Material","value":"Aluminum Alloy"}, ...]
+  Fallback: section blocks
+{%- endcomment -%}
+
+{%- assign specs_meta = product.metafields.custom.specs.value -%}
+
 <section class="ck-specs">
   <div class="ck-section-inner">
     <div class="ck-specs__header">
@@ -8,14 +16,24 @@
       {% endif %}
       <h2 class="ck-section-title">{{ section.settings.title }}</h2>
     </div>
+
     <table class="ck-specs__table">
       <tbody>
-        {% for block in section.blocks %}
-          <tr {{ block.shopify_attributes }}>
-            <td class="ck-specs__label">{{ block.settings.label }}</td>
-            <td class="ck-specs__value">{{ block.settings.value }}</td>
-          </tr>
-        {% endfor %}
+        {%- if specs_meta and specs_meta.size > 0 -%}
+          {%- for row in specs_meta -%}
+            <tr>
+              <td class="ck-specs__label">{{ row.label }}</td>
+              <td class="ck-specs__value">{{ row.value }}</td>
+            </tr>
+          {%- endfor -%}
+        {%- elsif section.blocks.size > 0 -%}
+          {%- for block in section.blocks -%}
+            <tr {{ block.shopify_attributes }}>
+              <td class="ck-specs__label">{{ block.settings.label }}</td>
+              <td class="ck-specs__value">{{ block.settings.value }}</td>
+            </tr>
+          {%- endfor -%}
+        {%- endif -%}
       </tbody>
     </table>
   </div>
@@ -25,13 +43,17 @@
 {
   "name": "Cookku Product Specs",
   "settings": [
+    {
+      "type": "paragraph",
+      "content": "Content is read from product metafield custom.specs (JSON array). Format: [{\"label\":\"Material\",\"value\":\"Aluminum\"}]"
+    },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "PRODUCT DETAILS" },
     { "type": "text", "id": "title", "label": "Title", "default": "Specifications" }
   ],
   "blocks": [
     {
       "type": "spec",
-      "name": "Specification row",
+      "name": "Spec row (fallback)",
       "settings": [
         { "type": "text", "id": "label", "label": "Label", "default": "Material" },
         { "type": "text", "id": "value", "label": "Value", "default": "Aluminum Alloy" }
@@ -39,19 +61,7 @@
     }
   ],
   "presets": [
-    {
-      "name": "Cookku Product Specs",
-      "blocks": [
-        { "type": "spec", "settings": { "label": "Material", "value": "Heavy Duty Aluminum Alloy" } },
-        { "type": "spec", "settings": { "label": "Color", "value": "Silver" } },
-        { "type": "spec", "settings": { "label": "Dimensions", "value": "21.5 × 12.5 × 12.5 cm" } },
-        { "type": "spec", "settings": { "label": "Weight", "value": "Approx. 320g" } },
-        { "type": "spec", "settings": { "label": "Suitable for", "value": "Lemon, Lime, Orange, Pomegranate" } },
-        { "type": "spec", "settings": { "label": "Cleaning", "value": "Hand-Wash, Rinse-Clean" } },
-        { "type": "spec", "settings": { "label": "Power source", "value": "Manual (No Electricity Needed)" } },
-        { "type": "spec", "settings": { "label": "Package includes", "value": "1× FreshTaste™ Metal Citrus Press" } }
-      ]
-    }
+    { "name": "Cookku Product Specs" }
   ]
 }
 {% endschema %}

@@ -1,5 +1,15 @@
 {{ 'cookku-product.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%}
+  Reads from metafield: custom.features (JSON type)
+  Expected format: [{"icon":"⏱️","title":"Title","desc":"Description"}, ...]
+  Fallback: section blocks
+  Setup: Shopify Admin → Settings → Custom data → Products → Add definition
+  Namespace: custom | Key: features | Type: JSON
+{%- endcomment -%}
+
+{%- assign features_meta = product.metafields.custom.features.value -%}
+
 <section class="ck-features">
   <div class="ck-section-inner">
     <div class="ck-features__header">
@@ -10,14 +20,25 @@
         {{ section.settings.title_before }} <em>{{ section.settings.title_em }}</em>
       </h2>
     </div>
+
     <div class="ck-features__grid">
-      {% for block in section.blocks %}
-        <div class="ck-feature-card" {{ block.shopify_attributes }}>
-          <span class="ck-feature-card__icon" aria-hidden="true">{{ block.settings.icon }}</span>
-          <h3 class="ck-feature-card__title">{{ block.settings.title }}</h3>
-          <p class="ck-feature-card__desc">{{ block.settings.description }}</p>
-        </div>
-      {% endfor %}
+      {%- if features_meta and features_meta.size > 0 -%}
+        {%- for f in features_meta -%}
+          <div class="ck-feature-card">
+            <span class="ck-feature-card__icon" aria-hidden="true">{{ f.icon }}</span>
+            <h3 class="ck-feature-card__title">{{ f.title }}</h3>
+            <p class="ck-feature-card__desc">{{ f.desc }}</p>
+          </div>
+        {%- endfor -%}
+      {%- elsif section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <div class="ck-feature-card" {{ block.shopify_attributes }}>
+            <span class="ck-feature-card__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+            <h3 class="ck-feature-card__title">{{ block.settings.title }}</h3>
+            <p class="ck-feature-card__desc">{{ block.settings.description }}</p>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -27,28 +48,17 @@
   "name": "Cookku Product Features",
   "settings": [
     {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow text",
-      "default": "WHY YOU'LL LOVE IT"
+      "type": "paragraph",
+      "content": "Content is read from product metafield custom.features (JSON array). If empty, falls back to the blocks below. JSON format: [{\"icon\":\"⏱️\",\"title\":\"...\",\"desc\":\"...\"}]"
     },
-    {
-      "type": "text",
-      "id": "title_before",
-      "label": "Title — before italic",
-      "default": "Six reasons it earns"
-    },
-    {
-      "type": "text",
-      "id": "title_em",
-      "label": "Title — italic word",
-      "default": "counter space"
-    }
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "WHY YOU'LL LOVE IT" },
+    { "type": "text", "id": "title_before", "label": "Title — before italic", "default": "Six reasons it earns" },
+    { "type": "text", "id": "title_em", "label": "Title — italic word", "default": "counter space" }
   ],
   "blocks": [
     {
       "type": "feature",
-      "name": "Feature",
+      "name": "Feature (fallback)",
       "settings": [
         { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "⭐" },
         { "type": "text", "id": "title", "label": "Title", "default": "Feature title" },
@@ -57,17 +67,7 @@
     }
   ],
   "presets": [
-    {
-      "name": "Cookku Product Features",
-      "blocks": [
-        { "type": "feature", "settings": { "icon": "⏱️", "title": "Pure juice in 3 seconds", "description": "Squeeze every drop. Perfect for drinks, dressings, and marinades." } },
-        { "type": "feature", "settings": { "icon": "💪", "title": "Heavy-duty aluminum", "description": "Solid single-piece alloy body with long-leverage handle. Maximum juice, minimum effort." } },
-        { "type": "feature", "settings": { "icon": "🔩", "title": "Built-in seed filter", "description": "Integrated mesh catches seeds and ensures pulp-free juice. No straining required." } },
-        { "type": "feature", "settings": { "icon": "🍸", "title": "Bartender-grade", "description": "Cocktails, mocktails, lemonades, marmalades. Restaurant flavor at home." } },
-        { "type": "feature", "settings": { "icon": "💧", "title": "Rinse-clean in seconds", "description": "No coils, batteries, or sticky parts. A quick rinse is all it takes." } },
-        { "type": "feature", "settings": { "icon": "🔇", "title": "No electricity, no noise", "description": "Squeeze anywhere — kitchen, dorm, RV, Compact and completely silent." } }
-      ]
-    }
+    { "name": "Cookku Product Features" }
   ]
 }
 {% endschema %}

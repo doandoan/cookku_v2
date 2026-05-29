@@ -10,6 +10,14 @@
   if current_collection == blank
     assign current_collection = product.collections.first
   endif
+
+  comment
+    Bullets: read from metafield "custom.bullets" (list.single_line_text_field)
+    Fallback: section blocks of type "bullet"
+    To set up metafields: Shopify Admin → Settings → Custom data → Products → Add definition
+    Namespace: custom | Key: bullets | Type: List of single-line text
+  endcomment
+  assign bullets_meta = product.metafields.custom.bullets.value
 -%}
 
 <!-- Breadcrumb -->
@@ -74,6 +82,7 @@
 
     <!-- RIGHT: Product Info + Form -->
     <div class="ck-product-info">
+
       {%- if product.vendor != blank -%}
         <p class="ck-product-eyebrow">{{ product.vendor | upcase }}</p>
       {%- elsif section.settings.eyebrow != blank -%}
@@ -108,7 +117,14 @@
       <p class="ck-product-shipping-note">Free US Shipping. Taxes calculated at checkout.</p>
       <hr class="ck-product-divider">
 
-      {%- if section.blocks.size > 0 -%}
+      <!-- Feature Bullets: metafield → blocks fallback -->
+      {%- if bullets_meta and bullets_meta.size > 0 -%}
+        <ul class="ck-product-bullets">
+          {%- for bullet in bullets_meta -%}
+            <li>{{ bullet }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- elsif section.blocks.size > 0 -%}
         <ul class="ck-product-bullets">
           {%- for block in section.blocks -%}
             {%- if block.type == 'bullet' -%}
@@ -159,7 +175,7 @@
             name="add"
             class="ck-btn-add-to-cart"
             id="ck-add-to-cart"
-            {%- if current_variant.available == false -%}disabled{%- endif -%}
+            {%- unless current_variant.available -%}disabled{%- endunless -%}
           >
             {%- if current_variant.available -%}
               ADD TO CART — <span id="ck-btn-price">{{ current_variant.price | money }}</span>
@@ -205,12 +221,10 @@
 
 <script>
   (function () {
-    /* --- Thumbnail switcher --- */
+    /* Thumbnail switcher */
     document.querySelectorAll('.ck-product-gallery__thumb').forEach(function (thumb) {
       thumb.addEventListener('click', function () {
-        document.querySelectorAll('.ck-product-gallery__thumb').forEach(function (t) {
-          t.classList.remove('ck-thumb-active');
-        });
+        document.querySelectorAll('.ck-product-gallery__thumb').forEach(function (t) { t.classList.remove('ck-thumb-active'); });
         this.classList.add('ck-thumb-active');
         var mainImg = document.getElementById('ck-main-product-img');
         if (mainImg) mainImg.src = this.dataset.full;
@@ -220,81 +234,67 @@
       });
     });
 
-    /* --- Quantity selector --- */
+    /* Quantity selector */
     var qtyInput = document.getElementById('ck-quantity');
-    document.getElementById('ck-qty-minus') && document.getElementById('ck-qty-minus').addEventListener('click', function () {
+    var minusBtn = document.getElementById('ck-qty-minus');
+    var plusBtn  = document.getElementById('ck-qty-plus');
+    if (minusBtn) minusBtn.addEventListener('click', function () {
       var v = parseInt(qtyInput.value) || 1;
       if (v > 1) qtyInput.value = v - 1;
     });
-    document.getElementById('ck-qty-plus') && document.getElementById('ck-qty-plus').addEventListener('click', function () {
+    if (plusBtn) plusBtn.addEventListener('click', function () {
       qtyInput.value = (parseInt(qtyInput.value) || 1) + 1;
     });
 
-    /* --- Variant selection --- */
-    var productData = {{ product.variants | json }};
-    var variantButtons = document.querySelectorAll('.ck-variant-btn');
+    /* Variant selection */
+    var productVariants = {{ product.variants | json }};
+    document.querySelectorAll('.ck-variant-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var pos = this.dataset.optionPosition;
+        document.querySelectorAll('.ck-variant-btn[data-option-position="' + pos + '"]').forEach(function (b) { b.classList.remove('ck-variant-active'); });
+        this.classList.add('ck-variant-active');
 
-    if (variantButtons.length > 0) {
-      variantButtons.forEach(function (btn) {
-        btn.addEventListener('click', function () {
-          var position = parseInt(this.dataset.optionPosition);
-          var value = this.dataset.optionValue;
-
-          /* Update active state for this option group */
-          document.querySelectorAll('.ck-variant-btn[data-option-position="' + position + '"]').forEach(function (b) {
-            b.classList.remove('ck-variant-active');
-          });
-          this.classList.add('ck-variant-active');
-
-          /* Find matching variant */
-          var selectedOptions = {};
-          document.querySelectorAll('.ck-variant-btn.ck-variant-active').forEach(function (b) {
-            selectedOptions[parseInt(b.dataset.optionPosition)] = b.dataset.optionValue;
-          });
-
-          var matchedVariant = productData.find(function (v) {
-            return Object.keys(selectedOptions).every(function (pos) {
-              return v['option' + pos] === selectedOptions[pos];
-            });
-          });
-
-          if (matchedVariant) {
-            document.getElementById('ck-variant-id').value = matchedVariant.id;
-            var priceEl = document.getElementById('ck-price-sale');
-            var comparePriceEl = document.getElementById('ck-price-compare');
-            var btnPriceEl = document.getElementById('ck-btn-price');
-            var addBtn = document.getElementById('ck-add-to-cart');
-
-            if (priceEl) priceEl.textContent = formatMoney(matchedVariant.price);
-            if (btnPriceEl) btnPriceEl.textContent = formatMoney(matchedVariant.price);
-            if (comparePriceEl) {
-              comparePriceEl.textContent = matchedVariant.compare_at_price > matchedVariant.price
-                ? formatMoney(matchedVariant.compare_at_price) : '';
-            }
-            if (addBtn) {
-              addBtn.disabled = !matchedVariant.available;
-              if (!matchedVariant.available) addBtn.textContent = 'SOLD OUT';
-            }
-          }
+        var selected = {};
+        document.querySelectorAll('.ck-variant-btn.ck-variant-active').forEach(function (b) {
+          selected[b.dataset.optionPosition] = b.dataset.optionValue;
         });
-      });
-    }
 
-    function formatMoney(cents) {
-      return '$' + (cents / 100).toFixed(2).replace('.00', '.99').replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    }
+        var match = productVariants.find(function (v) {
+          return Object.keys(selected).every(function (p) { return v['option' + p] === selected[p]; });
+        });
+
+        if (match) {
+          document.getElementById('ck-variant-id').value = match.id;
+          var priceEl   = document.getElementById('ck-price-sale');
+          var compareEl = document.getElementById('ck-price-compare');
+          var btnPrice  = document.getElementById('ck-btn-price');
+          var addBtn    = document.getElementById('ck-add-to-cart');
+          var fmt = function (c) { return '$' + (c / 100).toFixed(2); };
+          if (priceEl)   priceEl.textContent   = fmt(match.price);
+          if (btnPrice)  btnPrice.textContent   = fmt(match.price);
+          if (compareEl) compareEl.textContent  = match.compare_at_price > match.price ? fmt(match.compare_at_price) : '';
+          if (addBtn) {
+            addBtn.disabled = !match.available;
+            if (!match.available) addBtn.textContent = 'SOLD OUT';
+          }
+        }
+      });
+    });
   })();
 </script>
 
 {% schema %}
 {
   "name": "Cookku Main Product",
-  "tag": "section",
   "settings": [
+    {
+      "type": "paragraph",
+      "content": "Feature bullets are read from the product metafield: namespace = custom, key = bullets (List of single-line text). If not set, falls back to the blocks below."
+    },
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow override (fallback if no vendor)",
+      "label": "Eyebrow override (used if product has no vendor)",
       "default": "COOKKU KITCHEN"
     },
     {
@@ -307,7 +307,7 @@
   "blocks": [
     {
       "type": "bullet",
-      "name": "Feature bullet",
+      "name": "Feature bullet (fallback)",
       "settings": [
         {
           "type": "text",
@@ -319,15 +319,7 @@
     }
   ],
   "presets": [
-    {
-      "name": "Cookku Main Product",
-      "blocks": [
-        { "type": "bullet", "settings": { "text": "Pure juice in 3 seconds, no seeds, no pulp" } },
-        { "type": "bullet", "settings": { "text": "Heavy-duty aluminum, built to last" } },
-        { "type": "bullet", "settings": { "text": "Works for lemon, lime, orange, pomegranate" } },
-        { "type": "bullet", "settings": { "text": "Rinse-clean in seconds; no electricity needed" } }
-      ]
-    }
+    { "name": "Cookku Main Product" }
   ]
 }
 {% endschema %}

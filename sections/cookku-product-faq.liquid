@@ -1,5 +1,13 @@
 {{ 'cookku-product.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%}
+  Reads from metafield: custom.faq (JSON type)
+  Expected format: [{"question":"Q?","answer":"A."}, ...]
+  Fallback: section blocks
+{%- endcomment -%}
+
+{%- assign faq_meta = product.metafields.custom.faq.value -%}
+
 <section class="ck-faq">
   <div class="ck-section-inner">
     <div class="ck-faq__header">
@@ -8,18 +16,29 @@
       {% endif %}
       <h2 class="ck-section-title">{{ section.settings.title }}</h2>
     </div>
+
     <div class="ck-faq__list">
-      {% for block in section.blocks %}
-        <div class="ck-faq-item" {{ block.shopify_attributes }}>
-          <button class="ck-faq-item__btn" type="button" aria-expanded="false">
-            <span class="ck-faq-item__question">{{ block.settings.question }}</span>
-            <span class="ck-faq-item__icon" aria-hidden="true">+</span>
-          </button>
-          <div class="ck-faq-item__answer" aria-hidden="true">
-            {{ block.settings.answer }}
+      {%- if faq_meta and faq_meta.size > 0 -%}
+        {%- for item in faq_meta -%}
+          <div class="ck-faq-item">
+            <button class="ck-faq-item__btn" type="button" aria-expanded="false">
+              <span class="ck-faq-item__question">{{ item.question }}</span>
+              <span class="ck-faq-item__icon" aria-hidden="true">+</span>
+            </button>
+            <div class="ck-faq-item__answer" aria-hidden="true">{{ item.answer }}</div>
           </div>
-        </div>
-      {% endfor %}
+        {%- endfor -%}
+      {%- elsif section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <div class="ck-faq-item" {{ block.shopify_attributes }}>
+            <button class="ck-faq-item__btn" type="button" aria-expanded="false">
+              <span class="ck-faq-item__question">{{ block.settings.question }}</span>
+              <span class="ck-faq-item__icon" aria-hidden="true">+</span>
+            </button>
+            <div class="ck-faq-item__answer" aria-hidden="true">{{ block.settings.answer }}</div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -30,15 +49,11 @@
       btn.addEventListener('click', function () {
         var item = this.closest('.ck-faq-item');
         var isOpen = item.classList.contains('ck-faq-open');
-
-        /* Close all */
         document.querySelectorAll('.ck-faq-item').forEach(function (i) {
           i.classList.remove('ck-faq-open');
           i.querySelector('.ck-faq-item__btn').setAttribute('aria-expanded', 'false');
           i.querySelector('.ck-faq-item__answer').setAttribute('aria-hidden', 'true');
         });
-
-        /* Open clicked if it was closed */
         if (!isOpen) {
           item.classList.add('ck-faq-open');
           this.setAttribute('aria-expanded', 'true');
@@ -53,13 +68,17 @@
 {
   "name": "Cookku Product FAQ",
   "settings": [
+    {
+      "type": "paragraph",
+      "content": "Content is read from product metafield custom.faq (JSON array). Format: [{\"question\":\"Q?\",\"answer\":\"A.\"}]"
+    },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "GOT QUESTIONS?" },
     { "type": "text", "id": "title", "label": "Title", "default": "Frequently asked" }
   ],
   "blocks": [
     {
       "type": "faq",
-      "name": "FAQ item",
+      "name": "FAQ item (fallback)",
       "settings": [
         { "type": "text", "id": "question", "label": "Question", "default": "Your question here?" },
         { "type": "textarea", "id": "answer", "label": "Answer", "default": "Your answer here." }
@@ -67,16 +86,7 @@
     }
   ],
   "presets": [
-    {
-      "name": "Cookku Product FAQ",
-      "blocks": [
-        { "type": "faq", "settings": { "question": "What fruits can I use with this press?", "answer": "Lemons, limes, oranges, pomegranates, grapefruits, and more. Cut larger fruits in half before pressing." } },
-        { "type": "faq", "settings": { "question": "Does it really filter out seeds?", "answer": "Yes! The built-in seed filter prevents seeds and large pulp from entering your drink." } },
-        { "type": "faq", "settings": { "question": "Is it hard to press? Will my hand get tired?", "answer": "Not at all. The long-leverage handle design multiplies your pressing force significantly, making it effortless even for citrus-heavy recipes." } },
-        { "type": "faq", "settings": { "question": "How long does shipping take?", "answer": "Standard US shipping takes 3–5 business days. Expedited options are available at checkout." } },
-        { "type": "faq", "settings": { "question": "What if I'm not satisfied?", "answer": "We offer a 30-day hassle-free return policy. Contact support@cookku.com and we'll make it right." } }
-      ]
-    }
+    { "name": "Cookku Product FAQ" }
   ]
 }
 {% endschema %}

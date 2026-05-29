@@ -1,5 +1,13 @@
 {{ 'cookku-product.css' | asset_url | stylesheet_tag }}
 
+{%- comment -%}
+  Reads from metafield: custom.how_it_works (JSON type)
+  Expected format: [{"number":"1","title":"STEP TITLE","desc":"Step description"}, ...]
+  Fallback: section blocks
+{%- endcomment -%}
+
+{%- assign steps_meta = product.metafields.custom.how_it_works.value -%}
+
 <section class="ck-how-it-works">
   <div class="ck-section-inner">
     <div class="ck-how-it-works__header">
@@ -10,14 +18,25 @@
         {{ section.settings.title_before }} <em>{{ section.settings.title_em }}</em>
       </h2>
     </div>
+
     <div class="ck-how-it-works__grid">
-      {% for block in section.blocks %}
-        <div class="ck-step-card" {{ block.shopify_attributes }}>
-          <div class="ck-step-card__number">{{ block.settings.number }}</div>
-          <h3 class="ck-step-card__title">{{ block.settings.title }}</h3>
-          <p class="ck-step-card__desc">{{ block.settings.description }}</p>
-        </div>
-      {% endfor %}
+      {%- if steps_meta and steps_meta.size > 0 -%}
+        {%- for step in steps_meta -%}
+          <div class="ck-step-card">
+            <div class="ck-step-card__number">{{ step.number }}</div>
+            <h3 class="ck-step-card__title">{{ step.title }}</h3>
+            <p class="ck-step-card__desc">{{ step.desc }}</p>
+          </div>
+        {%- endfor -%}
+      {%- elsif section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <div class="ck-step-card" {{ block.shopify_attributes }}>
+            <div class="ck-step-card__number">{{ block.settings.number }}</div>
+            <h3 class="ck-step-card__title">{{ block.settings.title }}</h3>
+            <p class="ck-step-card__desc">{{ block.settings.description }}</p>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -27,28 +46,17 @@
   "name": "Cookku How It Works",
   "settings": [
     {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow text",
-      "default": "IN THREE SIMPLE STEPS"
+      "type": "paragraph",
+      "content": "Content is read from product metafield custom.how_it_works (JSON array). Format: [{\"number\":\"1\",\"title\":\"STEP\",\"desc\":\"...\"}]"
     },
-    {
-      "type": "text",
-      "id": "title_before",
-      "label": "Title — before italic",
-      "default": "How it"
-    },
-    {
-      "type": "text",
-      "id": "title_em",
-      "label": "Title — italic word",
-      "default": "works"
-    }
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "IN THREE SIMPLE STEPS" },
+    { "type": "text", "id": "title_before", "label": "Title — before italic", "default": "How it" },
+    { "type": "text", "id": "title_em", "label": "Title — italic word", "default": "works" }
   ],
   "blocks": [
     {
       "type": "step",
-      "name": "Step",
+      "name": "Step (fallback)",
       "settings": [
         { "type": "text", "id": "number", "label": "Step number", "default": "1" },
         { "type": "text", "id": "title", "label": "Title", "default": "STEP TITLE" },
@@ -57,14 +65,7 @@
     }
   ],
   "presets": [
-    {
-      "name": "Cookku How It Works",
-      "blocks": [
-        { "type": "step", "settings": { "number": "1", "title": "CUT & LOAD", "description": "Place your fruit in half and place it cut-side down into the cup section." } },
-        { "type": "step", "settings": { "number": "2", "title": "PRESS & SQUEEZE", "description": "Push down the handle with smooth pressure. Watch fresh juice flow." } },
-        { "type": "step", "settings": { "number": "3", "title": "POUR & RINSE", "description": "Pour juice into your glass. Rinse the press clean. Done." } }
-      ]
-    }
+    { "name": "Cookku How It Works" }
   ]
 }
 {% endschema %}
