@@ -3,7 +3,7 @@
     "ck-main-cart": {
       "type": "cookku-main-cart",
       "settings": {
-        "free_shipping_threshold": 35
+        "free_shipping_threshold": 50
       }
     },
     "ck-frequently-bought": {
