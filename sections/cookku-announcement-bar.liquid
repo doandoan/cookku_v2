@@ -1,0 +1,49 @@
+{{ 'cookku-homepage.css' | asset_url | stylesheet_tag }}
+
+<div class="cookku-announcement" role="region" aria-label="Store announcements">
+  <div class="cookku-announcement__inner">
+    <div class="cookku-announcement__item">
+      <span aria-hidden="true">🚚</span>
+      <span>{{ section.settings.item_1_text }}</span>
+    </div>
+    <div class="cookku-announcement__item">
+      <span aria-hidden="true">🛡️</span>
+      <span>{{ section.settings.item_2_text }}</span>
+    </div>
+    <div class="cookku-announcement__item">
+      <span aria-hidden="true">🔒</span>
+      <span>{{ section.settings.item_3_text }}</span>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cookku Announcement Bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "item_1_text",
+      "label": "Item 1 text",
+      "default": "Free US Shipping"
+    },
+    {
+      "type": "text",
+      "id": "item_2_text",
+      "label": "Item 2 text",
+      "default": "30-Day Guarantee"
+    },
+    {
+      "type": "text",
+      "id": "item_3_text",
+      "label": "Item 3 text",
+      "default": "Secure Checkout"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cookku Announcement Bar"
+    }
+  ]
+}
+{% endschema %}

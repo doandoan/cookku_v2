@@ -1,0 +1,87 @@
+{{ 'cookku-homepage.css' | asset_url | stylesheet_tag }}
+
+<section class="cookku-trust-strip">
+  <div class="cookku-trust-strip__grid">
+    {% for block in section.blocks %}
+      <div class="cookku-trust-strip-item" {{ block.shopify_attributes }}>
+        <span class="cookku-trust-strip-item__icon" aria-hidden="true">{{ block.settings.icon }}</span>
+        <div>
+          <p class="cookku-trust-strip-item__title">{{ block.settings.title }}</p>
+          <p class="cookku-trust-strip-item__desc">{{ block.settings.description }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cookku Trust Strip",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "🚚"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Free US Shipping"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Fast, reliable delivery on all orders."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cookku Trust Strip",
+      "blocks": [
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "🚚",
+            "title": "Free US Shipping",
+            "description": "Fast, reliable delivery on all orders."
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "🔒",
+            "title": "Secure Checkout",
+            "description": "Your information is safe and protected."
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "⭐",
+            "title": "Premium Quality",
+            "description": "Carefully selected tools that last."
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "♻️",
+            "title": "Easy Returns",
+            "description": "30-day hassle-free returns."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

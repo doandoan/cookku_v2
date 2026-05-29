@@ -1,0 +1,44 @@
+{{ 'cookku-homepage.css' | asset_url | stylesheet_tag }}
+
+<section class="cookku-philosophy">
+  {% if section.settings.eyebrow != blank %}
+    <p class="cookku-philosophy__eyebrow">{{ section.settings.eyebrow }}</p>
+  {% endif %}
+  {% if section.settings.quote != blank %}
+    <blockquote class="cookku-philosophy__quote">{{ section.settings.quote }}</blockquote>
+  {% endif %}
+  {% if section.settings.attribution != blank %}
+    <p class="cookku-philosophy__attribution">{{ section.settings.attribution }}</p>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Cookku Philosophy",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "THE COOKKU PHILOSOPHY"
+    },
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote",
+      "default": "\"Great homes don't need a thousand gadgets — just a few smart tools that work effortlessly, every time.\""
+    },
+    {
+      "type": "text",
+      "id": "attribution",
+      "label": "Attribution",
+      "default": "— MAKE YOUR HOME SMARTER"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cookku Philosophy"
+    }
+  ]
+}
+{% endschema %}

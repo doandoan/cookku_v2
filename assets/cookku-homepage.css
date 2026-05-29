@@ -1,0 +1,585 @@
+/* ===== COOKKU HOMEPAGE STYLES ===== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- Design Tokens --- */
+:root {
+  --ck-cream: #FFFCF8;
+  --ck-coral: #C44D2E;
+  --ck-green: #6B9B5C;
+  --ck-dark: #2A2825;
+  --ck-gold: #B8862D;
+  --ck-olive: #4A5940;
+  --ck-navy: #1C2433;
+  --ck-beige: #F5EFE6;
+  --ck-pink: #FDF0EF;
+  --ck-trust-bg: #F0EBE3;
+  --ck-border: #E8E0D4;
+  --ck-muted: #7A706A;
+}
+
+body {
+  background-color: var(--ck-cream) !important;
+}
+
+/* ========================
+   SHARED BUTTONS
+   ======================== */
+.cookku-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 26px;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 4px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  letter-spacing: 0.01em;
+  line-height: 1;
+}
+.cookku-btn:hover { opacity: 0.82; text-decoration: none; }
+.cookku-btn--primary {
+  background: var(--ck-dark);
+  color: var(--ck-cream);
+  border-color: var(--ck-dark);
+}
+.cookku-btn--outline {
+  background: transparent;
+  color: var(--ck-dark);
+  border-color: var(--ck-dark);
+}
+
+/* ========================
+   ANNOUNCEMENT BAR
+   ======================== */
+.cookku-announcement {
+  background-color: var(--ck-olive);
+  color: #FFFCF8;
+  padding: 9px 0;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.cookku-announcement__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.cookku-announcement__item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 2px 28px;
+}
+.cookku-announcement__item + .cookku-announcement__item {
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* ========================
+   HERO SECTION
+   ======================== */
+.cookku-hero {
+  background: var(--ck-cream);
+  padding: 60px 0 72px;
+}
+.cookku-hero__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+.cookku-hero__eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  color: var(--ck-coral);
+  text-transform: uppercase;
+  margin: 0 0 18px;
+}
+.cookku-hero__heading {
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-size: 50px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--ck-dark);
+  margin: 0 0 20px;
+  letter-spacing: -0.01em;
+}
+.cookku-hero__heading em {
+  font-style: italic;
+  color: var(--ck-green);
+  font-weight: 600;
+}
+.cookku-hero__subtext {
+  font-family: 'Inter', sans-serif;
+  font-size: 15.5px;
+  line-height: 1.65;
+  color: #5A5450;
+  margin: 0 0 34px;
+}
+.cookku-hero__buttons {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 42px;
+}
+.cookku-hero__trust {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.cookku-hero__trust-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+.cookku-hero__trust-icon {
+  font-size: 19px;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+.cookku-hero__trust-text strong {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ck-dark);
+}
+.cookku-hero__trust-text span {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+  color: var(--ck-muted);
+}
+.cookku-hero__image {
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 5 / 4;
+  background-color: #E8E0D0;
+}
+.cookku-hero__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cookku-hero__image-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 340px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #A89880;
+  font-size: 13px;
+  font-style: italic;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+/* ========================
+   CATEGORIES SECTION
+   ======================== */
+.cookku-categories {
+  background: var(--ck-cream);
+  padding: 0 0 72px;
+}
+.cookku-categories__grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.cookku-cat-card {
+  border-radius: 12px;
+  padding: 32px 28px 28px;
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+}
+.cookku-cat-card--kitchen { background: var(--ck-beige); }
+.cookku-cat-card--home { background: #FFFFFF; border: 1px solid var(--ck-border); }
+.cookku-cat-card--baby { background: var(--ck-pink); }
+.cookku-cat-card__icon {
+  width: 52px;
+  height: 52px;
+  background: rgba(255, 255, 255, 0.65);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+.cookku-cat-card__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--ck-dark);
+  margin: 0 0 10px;
+  line-height: 1.3;
+}
+.cookku-cat-card__desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #5A5450;
+  margin: 0 0 16px;
+  flex: 1;
+}
+.cookku-cat-card__link {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ck-coral);
+  text-decoration: none;
+}
+.cookku-cat-card__link:hover { text-decoration: underline; }
+
+/* ========================
+   FEATURED PICKS SECTION
+   ======================== */
+.cookku-featured {
+  background: var(--ck-cream);
+  padding: 72px 0;
+}
+.cookku-featured__header {
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto 48px;
+  padding: 0 24px;
+}
+.cookku-featured__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--ck-dark);
+  margin: 0 0 12px;
+  line-height: 1.2;
+}
+.cookku-featured__title em {
+  font-style: italic;
+  color: var(--ck-green);
+  font-weight: 600;
+}
+.cookku-featured__subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: var(--ck-muted);
+  margin: 0;
+}
+.cookku-featured__grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.cookku-product-card {
+  background: #FFFFFF;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #EDE7DE;
+  display: flex;
+  flex-direction: column;
+}
+.cookku-product-card__image-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: #F5F0E8;
+  overflow: hidden;
+}
+.cookku-product-card__image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cookku-product-card__img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #A09080;
+  font-size: 11px;
+  font-style: italic;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  padding: 12px;
+}
+.cookku-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 9px;
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  z-index: 1;
+}
+.cookku-badge--green { background: var(--ck-green); color: #fff; }
+.cookku-badge--red   { background: var(--ck-coral); color: #fff; }
+.cookku-badge--dark  { background: var(--ck-dark);  color: #fff; }
+.cookku-product-card__info {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.cookku-product-card__title {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ck-dark);
+  margin: 0 0 7px;
+  line-height: 1.4;
+}
+.cookku-product-card__rating {
+  font-size: 12.5px;
+  color: var(--ck-gold);
+  margin-bottom: 12px;
+  line-height: 1;
+}
+.cookku-product-card__rating span {
+  color: var(--ck-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+}
+.cookku-product-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+.cookku-product-card__price {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+}
+.cookku-price-sale {
+  font-family: 'Inter', sans-serif;
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--ck-coral);
+}
+.cookku-price-compare {
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  color: #A09080;
+  text-decoration: line-through;
+}
+.cookku-product-card__cart-btn {
+  width: 34px;
+  height: 34px;
+  background: var(--ck-dark);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.18s;
+  padding: 0;
+}
+.cookku-product-card__cart-btn:hover   { background: var(--ck-coral); }
+.cookku-product-card__cart-btn:disabled { opacity: 0.55; cursor: wait; }
+.cookku-product-card__cart-btn svg { display: block; }
+
+/* ========================
+   TRUST STRIP
+   ======================== */
+.cookku-trust-strip {
+  background: var(--ck-trust-bg);
+  padding: 28px 0;
+  border-top: 1px solid var(--ck-border);
+  border-bottom: 1px solid var(--ck-border);
+}
+.cookku-trust-strip__grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.cookku-trust-strip-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+.cookku-trust-strip-item__icon {
+  font-size: 26px;
+  flex-shrink: 0;
+}
+.cookku-trust-strip-item__title {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ck-dark);
+  margin: 0 0 2px;
+  line-height: 1.2;
+}
+.cookku-trust-strip-item__desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 12px;
+  color: var(--ck-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* ========================
+   PHILOSOPHY SECTION
+   ======================== */
+.cookku-philosophy {
+  background: var(--ck-navy);
+  padding: 80px 24px;
+  text-align: center;
+}
+.cookku-philosophy__eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--ck-gold);
+  text-transform: uppercase;
+  margin: 0 0 30px;
+}
+.cookku-philosophy__quote {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 30px;
+  font-style: italic;
+  font-weight: 400;
+  color: #FFFCF8;
+  line-height: 1.55;
+  max-width: 740px;
+  margin: 0 auto 28px;
+}
+.cookku-philosophy__attribution {
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  color: #6A7870;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ========================
+   CTA BANNER
+   ======================== */
+.cookku-cta-banner {
+  background: var(--ck-beige);
+  padding: 72px 0;
+}
+.cookku-cta-banner__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+.cookku-cta-banner__heading {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.18;
+  color: var(--ck-dark);
+  margin: 0 0 16px;
+}
+.cookku-cta-banner__subtext {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: #5A5450;
+  margin: 0 0 32px;
+  line-height: 1.65;
+}
+.cookku-cta-banner__image {
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 5 / 4;
+  background-color: #D8CFBE;
+}
+.cookku-cta-banner__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.cookku-cta-banner__image-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #A09080;
+  font-size: 13px;
+  font-style: italic;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  padding: 20px;
+}
+
+/* ========================
+   RESPONSIVE
+   ======================== */
+@media (max-width: 990px) {
+  .cookku-hero__inner,
+  .cookku-cta-banner__inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .cookku-categories__grid {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+  .cookku-featured__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cookku-trust-strip__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .cookku-hero__heading { font-size: 42px; }
+  .cookku-cta-banner__heading { font-size: 34px; }
+  .cookku-philosophy__quote { font-size: 26px; }
+}
+@media (max-width: 600px) {
+  .cookku-hero { padding: 40px 0 56px; }
+  .cookku-hero__heading { font-size: 34px; }
+  .cookku-hero__trust { flex-direction: column; gap: 14px; }
+  .cookku-featured__grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .cookku-featured__title { font-size: 28px; }
+  .cookku-trust-strip__grid { grid-template-columns: 1fr; }
+  .cookku-philosophy { padding: 60px 20px; }
+  .cookku-philosophy__quote { font-size: 22px; }
+  .cookku-cta-banner { padding: 48px 0; }
+  .cookku-cta-banner__heading { font-size: 28px; }
+  .cookku-announcement__inner { flex-wrap: nowrap; gap: 0; }
+  .cookku-announcement__item { padding: 2px 12px; font-size: 11px; }
+}

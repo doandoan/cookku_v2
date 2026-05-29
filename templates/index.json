@@ -1,75 +1,156 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "cookku-hero": {
+      "type": "cookku-hero",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "trust-1": {
+          "type": "trust_item",
           "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
+            "icon": "⭐",
+            "title": "Hand-Picked",
+            "subtitle": "Tested for real homes"
           }
         },
-        "button": {
-          "type": "buttons",
+        "trust-2": {
+          "type": "trust_item",
           "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "icon": "🏅",
+            "title": "Premium Quality",
+            "subtitle": "You can rely on"
+          }
+        },
+        "trust-3": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "❤️",
+            "title": "Designed for",
+            "subtitle": "Real life"
           }
         }
       },
-      "block_order": [
-        "heading",
-        "button"
-      ],
+      "block_order": ["trust-1", "trust-2", "trust-3"],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "eyebrow": "SMART TOOLS. HAPPY HOME.",
+        "heading_line1": "Everyday products",
+        "heading_line2": "that make life",
+        "heading_em": "easier",
+        "subtext": "Thoughtfully designed tools for your kitchen, home, and little ones — hand-picked for real American families.",
+        "button_1_label": "Shop Best Sellers →",
+        "button_1_url": "shopify://collections/best-sellers",
+        "button_2_label": "Explore Collections",
+        "button_2_url": "shopify://collections"
       }
     },
-    "featured_collection": {
-      "type": "featured-collection",
+    "cookku-categories": {
+      "type": "cookku-categories",
+      "blocks": {
+        "cat-1": {
+          "type": "category",
+          "settings": {
+            "icon": "🔍",
+            "title": "Kitchen Tools",
+            "description": "Prep faster, cook smarter, clean easier.",
+            "link_text": "Shop Kitchen",
+            "link": "shopify://collections/kitchen-tools"
+          }
+        },
+        "cat-2": {
+          "type": "category",
+          "settings": {
+            "icon": "🏠",
+            "title": "Home Tools",
+            "description": "Organize more, clean less, live better.",
+            "link_text": "Shop Home Tools",
+            "link": "shopify://collections/home-tools"
+          }
+        },
+        "cat-3": {
+          "type": "category",
+          "settings": {
+            "icon": "🎁",
+            "title": "Baby Gifts",
+            "description": "Safe, practical, and made for precious moments.",
+            "link_text": "Shop Baby Gifts",
+            "link": "shopify://collections/baby-gifts"
+          }
+        }
+      },
+      "block_order": ["cat-1", "cat-2", "cat-3"],
+      "settings": {}
+    },
+    "cookku-featured-picks": {
+      "type": "cookku-featured-picks",
       "settings": {
-        "title": "Featured products",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "all",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "solid",
-        "enable_desktop_slider": false,
-        "swipe_on_mobile": false,
-        "image_ratio": "adapt",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "padding_top": 44,
-        "padding_bottom": 36
+        "title_before": "Featured",
+        "title_em": "Smart Picks",
+        "subtitle": "Our most-loved tools — tested, trusted, ready to ship",
+        "collection": "all"
+      }
+    },
+    "cookku-trust-strip": {
+      "type": "cookku-trust-strip",
+      "blocks": {
+        "trust-s-1": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "🚚",
+            "title": "Free US Shipping",
+            "description": "Fast, reliable delivery on all orders."
+          }
+        },
+        "trust-s-2": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "🔒",
+            "title": "Secure Checkout",
+            "description": "Your information is safe and protected."
+          }
+        },
+        "trust-s-3": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "⭐",
+            "title": "Premium Quality",
+            "description": "Carefully selected tools that last."
+          }
+        },
+        "trust-s-4": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "♻️",
+            "title": "Easy Returns",
+            "description": "30-day hassle-free returns."
+          }
+        }
+      },
+      "block_order": ["trust-s-1", "trust-s-2", "trust-s-3", "trust-s-4"],
+      "settings": {}
+    },
+    "cookku-philosophy": {
+      "type": "cookku-philosophy",
+      "settings": {
+        "eyebrow": "THE COOKKU PHILOSOPHY",
+        "quote": "\"Great homes don't need a thousand gadgets — just a few smart tools that work effortlessly, every time.\"",
+        "attribution": "— MAKE YOUR HOME SMARTER"
+      }
+    },
+    "cookku-cta-banner": {
+      "type": "cookku-cta-banner",
+      "settings": {
+        "heading_line1": "Upgrade Your Home.",
+        "heading_line2": "Simplify Your Life.",
+        "subtext": "Shop our best picks and enjoy everyday convenience.",
+        "button_label": "Shop Best Picks →",
+        "button_url": "shopify://collections/all"
       }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "cookku-hero",
+    "cookku-categories",
+    "cookku-featured-picks",
+    "cookku-trust-strip",
+    "cookku-philosophy",
+    "cookku-cta-banner"
   ]
 }

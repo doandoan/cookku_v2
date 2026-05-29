@@ -1,0 +1,161 @@
+{{ 'cookku-homepage.css' | asset_url | stylesheet_tag }}
+
+{%- assign featured_collection = collections[section.settings.collection] -%}
+
+<section class="cookku-featured">
+  <div class="cookku-featured__header">
+    <h2 class="cookku-featured__title">
+      {{ section.settings.title_before }} <em>{{ section.settings.title_em }}</em>
+    </h2>
+    {% if section.settings.subtitle != blank %}
+      <p class="cookku-featured__subtitle">{{ section.settings.subtitle }}</p>
+    {% endif %}
+  </div>
+
+  <div class="cookku-featured__grid">
+    {% if featured_collection != blank and featured_collection.products_count > 0 %}
+      {% for product in featured_collection.products limit: 4 %}
+        {%- liquid
+          assign badge_text = ''
+          assign badge_class = ''
+          if product.tags contains 'best-seller'
+            assign badge_text = 'BEST SELLER'
+            assign badge_class = 'cookku-badge--green'
+          elsif product.compare_at_price > product.price
+            assign raw_discount = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price
+            assign badge_text = '-' | append: raw_discount | append: '%'
+            assign badge_class = 'cookku-badge--red'
+          elsif product.tags contains 'new'
+            assign badge_text = 'NEW'
+            assign badge_class = 'cookku-badge--dark'
+          endif
+        -%}
+        <div class="cookku-product-card">
+          <div class="cookku-product-card__image-wrap">
+            {% if badge_text != '' %}
+              <span class="cookku-badge {{ badge_class }}">{{ badge_text }}</span>
+            {% endif %}
+            {% if product.featured_image %}
+              {{
+                product.featured_image
+                | image_url: width: 420
+                | image_tag:
+                  loading: 'lazy',
+                  alt: product.featured_image.alt | default: product.title
+              }}
+            {% else %}
+              <div class="cookku-product-card__img-placeholder">{{ product.title }}</div>
+            {% endif %}
+          </div>
+
+          <div class="cookku-product-card__info">
+            <a href="{{ product.url }}" class="cookku-product-card__title">{{ product.title }}</a>
+            <div class="cookku-product-card__rating">
+              ★★★★★ <span>(New)</span>
+            </div>
+            <div class="cookku-product-card__footer">
+              <div class="cookku-product-card__price">
+                <span class="cookku-price-sale">{{ product.price | money }}</span>
+                {% if product.compare_at_price > product.price %}
+                  <s class="cookku-price-compare">{{ product.compare_at_price | money }}</s>
+                {% endif %}
+              </div>
+              <button
+                type="button"
+                class="cookku-product-card__cart-btn cookku-cart-add"
+                data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                aria-label="Add {{ product.title | escape }} to cart"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="9" cy="21" r="1"/>
+                  <circle cx="20" cy="21" r="1"/>
+                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+
+    {% else %}
+      <p style="grid-column: 1 / -1; text-align: center; color: var(--ck-muted); font-family: 'Inter', sans-serif; font-size: 14px; padding: 40px 0;">
+        No products found. Please select a collection in the theme editor.
+      </p>
+    {% endif %}
+  </div>
+</section>
+
+<script>
+  (function () {
+    document.querySelectorAll('.cookku-cart-add').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var variantId = parseInt(this.dataset.variantId, 10);
+        if (!variantId) return;
+        var self = this;
+        self.disabled = true;
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] })
+        })
+          .then(function (r) { return r.json(); })
+          .then(function () {
+            return fetch('/?sections=cart-icon-bubble');
+          })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (data['cart-icon-bubble']) {
+              var parser = new DOMParser();
+              var doc = parser.parseFromString(data['cart-icon-bubble'], 'text/html');
+              var newBubble = doc.getElementById('cart-icon-bubble');
+              var existingBubble = document.getElementById('cart-icon-bubble');
+              if (newBubble && existingBubble) {
+                existingBubble.innerHTML = newBubble.innerHTML;
+              }
+            }
+            self.disabled = false;
+          })
+          .catch(function () {
+            self.disabled = false;
+          });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Cookku Featured Picks",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title_before",
+      "label": "Title — text before italic",
+      "default": "Featured"
+    },
+    {
+      "type": "text",
+      "id": "title_em",
+      "label": "Title — italic word (green)",
+      "default": "Smart Picks"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Our most-loved tools — tested, trusted, ready to ship"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cookku Featured Picks"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,108 @@
+{{ 'cookku-homepage.css' | asset_url | stylesheet_tag }}
+
+<section class="cookku-categories">
+  <div class="cookku-categories__grid">
+    {% for block in section.blocks %}
+      {%- liquid
+        case forloop.index
+          when 1
+            assign card_mod = 'cookku-cat-card--kitchen'
+          when 2
+            assign card_mod = 'cookku-cat-card--home'
+          when 3
+            assign card_mod = 'cookku-cat-card--baby'
+          else
+            assign card_mod = 'cookku-cat-card--kitchen'
+        endcase
+      -%}
+      <a
+        href="{{ block.settings.link }}"
+        class="cookku-cat-card {{ card_mod }}"
+        {{ block.shopify_attributes }}
+      >
+        <div class="cookku-cat-card__icon" aria-hidden="true">{{ block.settings.icon }}</div>
+        <h2 class="cookku-cat-card__title">{{ block.settings.title }}</h2>
+        <p class="cookku-cat-card__desc">{{ block.settings.description }}</p>
+        <span class="cookku-cat-card__link">{{ block.settings.link_text }} →</span>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cookku Categories",
+  "max_blocks": 3,
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "🔍"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Kitchen Tools"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Prep faster, cook smarter, clean easier."
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "Shop Kitchen"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cookku Categories",
+      "blocks": [
+        {
+          "type": "category",
+          "settings": {
+            "icon": "🔍",
+            "title": "Kitchen Tools",
+            "description": "Prep faster, cook smarter, clean easier.",
+            "link_text": "Shop Kitchen"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "icon": "🏠",
+            "title": "Home Tools",
+            "description": "Organize more, clean less, live better.",
+            "link_text": "Shop Home Tools"
+          }
+        },
+        {
+          "type": "category",
+          "settings": {
+            "icon": "🎁",
+            "title": "Baby Gifts",
+            "description": "Safe, practical, and made for precious moments.",
+            "link_text": "Shop Baby Gifts"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

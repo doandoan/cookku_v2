@@ -1,0 +1,183 @@
+{{ 'cookku-homepage.css' | asset_url | stylesheet_tag }}
+
+<section class="cookku-hero">
+  <div class="cookku-hero__inner">
+
+    <div class="cookku-hero__content">
+      {% if section.settings.eyebrow != blank %}
+        <p class="cookku-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+
+      <h1 class="cookku-hero__heading">
+        {{ section.settings.heading_line1 }}<br>
+        {{ section.settings.heading_line2 }} <em>{{ section.settings.heading_em }}</em>
+      </h1>
+
+      {% if section.settings.subtext != blank %}
+        <p class="cookku-hero__subtext">{{ section.settings.subtext }}</p>
+      {% endif %}
+
+      <div class="cookku-hero__buttons">
+        {% if section.settings.button_1_label != blank %}
+          <a href="{{ section.settings.button_1_url }}" class="cookku-btn cookku-btn--primary">
+            {{ section.settings.button_1_label }}
+          </a>
+        {% endif %}
+        {% if section.settings.button_2_label != blank %}
+          <a href="{{ section.settings.button_2_url }}" class="cookku-btn cookku-btn--outline">
+            {{ section.settings.button_2_label }}
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="cookku-hero__trust">
+        {% for block in section.blocks %}
+          <div class="cookku-hero__trust-item" {{ block.shopify_attributes }}>
+            <span class="cookku-hero__trust-icon" aria-hidden="true">{{ block.settings.icon }}</span>
+            <div class="cookku-hero__trust-text">
+              <strong>{{ block.settings.title }}</strong>
+              <span>{{ block.settings.subtitle }}</span>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="cookku-hero__image">
+      {% if section.settings.image != blank %}
+        {{
+          section.settings.image
+          | image_url: width: 800
+          | image_tag: loading: 'eager', alt: section.settings.image.alt
+        }}
+      {% else %}
+        <div class="cookku-hero__image-placeholder">
+          [ Hero lifestyle image — kitchen with featured product ]
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cookku Hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "SMART TOOLS. HAPPY HOME."
+    },
+    {
+      "type": "text",
+      "id": "heading_line1",
+      "label": "Heading — line 1",
+      "default": "Everyday products"
+    },
+    {
+      "type": "text",
+      "id": "heading_line2",
+      "label": "Heading — line 2 (before italic word)",
+      "default": "that make life"
+    },
+    {
+      "type": "text",
+      "id": "heading_em",
+      "label": "Heading — italic word (green)",
+      "default": "easier"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Thoughtfully designed tools for your kitchen, home, and little ones — hand-picked for real American families."
+    },
+    {
+      "type": "text",
+      "id": "button_1_label",
+      "label": "Button 1 label",
+      "default": "Shop Best Sellers →"
+    },
+    {
+      "type": "url",
+      "id": "button_1_url",
+      "label": "Button 1 URL"
+    },
+    {
+      "type": "text",
+      "id": "button_2_label",
+      "label": "Button 2 label",
+      "default": "Explore Collections"
+    },
+    {
+      "type": "url",
+      "id": "button_2_url",
+      "label": "Button 2 URL"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Hero image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "Icon (emoji)",
+          "default": "⭐"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Hand-Picked"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Tested for real homes"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cookku Hero",
+      "blocks": [
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "⭐",
+            "title": "Hand-Picked",
+            "subtitle": "Tested for real homes"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "🏅",
+            "title": "Premium Quality",
+            "subtitle": "You can rely on"
+          }
+        },
+        {
+          "type": "trust_item",
+          "settings": {
+            "icon": "❤️",
+            "title": "Designed for",
+            "subtitle": "Real life"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
