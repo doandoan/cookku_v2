@@ -1,0 +1,438 @@
+/* ===== COOKKU COLLECTION PAGE STYLES ===== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --ck-cream: #FFFCF8;
+  --ck-coral: #C44D2E;
+  --ck-green: #6B9B5C;
+  --ck-dark: #2A2825;
+  --ck-gold: #B8862D;
+  --ck-olive: #4A5940;
+  --ck-beige: #F5EFE6;
+  --ck-border: #E8E0D4;
+  --ck-muted: #7A706A;
+}
+
+body { background-color: var(--ck-cream) !important; }
+
+/* ========================
+   BREADCRUMB
+   ======================== */
+.ck-breadcrumb {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 24px 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  color: var(--ck-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.ck-breadcrumb a { color: var(--ck-muted); text-decoration: none; }
+.ck-breadcrumb a:hover { color: var(--ck-dark); text-decoration: underline; }
+.ck-breadcrumb__sep { color: #B0A8A2; }
+
+/* ========================
+   COLLECTION HERO BANNER
+   ======================== */
+.ck-coll-hero {
+  background: var(--ck-beige);
+  padding: 56px 0 48px;
+  position: relative;
+  overflow: hidden;
+}
+/* Decorative circle — top right (light sage green) */
+.ck-coll-hero::before {
+  content: '';
+  position: absolute;
+  top: -70px;
+  right: -70px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: rgba(107, 155, 92, 0.1);
+  pointer-events: none;
+}
+/* Decorative arc — bottom left (beige) */
+.ck-coll-hero::after {
+  content: '';
+  position: absolute;
+  bottom: -60px;
+  left: -60px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(180, 160, 130, 0.18);
+  pointer-events: none;
+}
+.ck-coll-hero__inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.ck-coll-hero__eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  color: var(--ck-coral);
+  text-transform: uppercase;
+  margin: 0 0 14px;
+}
+.ck-coll-hero__title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 46px;
+  font-weight: 700;
+  color: var(--ck-dark);
+  margin: 0 0 16px;
+  line-height: 1.15;
+}
+.ck-coll-hero__title em {
+  font-style: italic;
+  color: var(--ck-green);
+  font-weight: 600;
+}
+.ck-coll-hero__desc {
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  color: #5A5450;
+  line-height: 1.65;
+  margin: 0 auto;
+  max-width: 540px;
+}
+.ck-coll-hero__desc p { margin: 0; }
+
+/* ========================
+   TOOLBAR (count + filters + sort)
+   ======================== */
+.ck-coll-toolbar-wrap {
+  background: var(--ck-cream);
+  padding: 28px 0 4px;
+}
+.ck-coll-toolbar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.ck-coll-toolbar__left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.ck-coll-count {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--ck-muted);
+  white-space: nowrap;
+}
+.ck-coll-filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.ck-filter-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1.5px solid #D8D0C8;
+  color: var(--ck-dark);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+  line-height: 1;
+}
+.ck-filter-pill:hover {
+  border-color: var(--ck-dark);
+  background: var(--ck-beige);
+  text-decoration: none;
+  color: var(--ck-dark);
+}
+.ck-filter-pill--active {
+  background: var(--ck-olive);
+  border-color: var(--ck-olive);
+  color: #fff;
+}
+.ck-filter-pill--active:hover {
+  background: var(--ck-olive);
+  color: #fff;
+}
+.ck-sort-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+.ck-sort-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: var(--ck-muted);
+}
+.ck-sort-select {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ck-dark);
+  border: 1.5px solid var(--ck-border);
+  border-radius: 4px;
+  padding: 6px 10px;
+  background: var(--ck-cream);
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 28px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%237A706A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+}
+.ck-sort-select:focus { border-color: var(--ck-dark); }
+
+/* ========================
+   PRODUCT GRID
+   ======================== */
+.ck-coll-grid-section {
+  background: var(--ck-cream);
+  padding: 24px 0 0;
+}
+.ck-coll-grid-wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+.ck-coll-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* Product card */
+.ck-coll-card {
+  background: #fff;
+  border: 1px solid var(--ck-border);
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s;
+}
+.ck-coll-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+
+/* Image */
+.ck-coll-card__image-wrap {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: #F5EFE6;
+  overflow: hidden;
+}
+.ck-coll-card__image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 12px;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.ck-coll-card:hover .ck-coll-card__image-wrap img { transform: scale(1.04); }
+.ck-coll-card__img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #A09080;
+  font-size: 11px;
+  font-style: italic;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  padding: 12px;
+}
+
+/* Badge */
+.ck-coll-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 10px;
+  border-radius: 100px;
+  font-family: 'Inter', sans-serif;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  z-index: 1;
+}
+.ck-coll-badge--green { background: var(--ck-green); color: #fff; }
+.ck-coll-badge--red   { background: var(--ck-coral); color: #fff; }
+.ck-coll-badge--dark  { background: var(--ck-dark);  color: #fff; }
+
+/* Wishlist button */
+.ck-coll-card__wishlist {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1.5px solid #D8D0C8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+  transition: all 0.15s;
+  padding: 0;
+  color: #A09080;
+}
+.ck-coll-card__wishlist:hover {
+  background: #fff;
+  border-color: var(--ck-coral);
+  color: var(--ck-coral);
+}
+.ck-coll-card__wishlist.ck-wishlisted {
+  background: #fff4f2;
+  border-color: var(--ck-coral);
+  color: var(--ck-coral);
+}
+
+/* Card info */
+.ck-coll-card__info {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.ck-coll-card__rating {
+  font-size: 12px;
+  color: var(--ck-gold);
+  margin-bottom: 6px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.ck-coll-card__rating span {
+  color: var(--ck-muted);
+  font-family: 'Inter', sans-serif;
+  font-size: 11.5px;
+}
+.ck-coll-card__title {
+  font-family: 'Inter', sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--ck-dark);
+  text-decoration: none;
+  margin: 0 0 10px;
+  line-height: 1.4;
+  display: block;
+}
+.ck-coll-card__title:hover { text-decoration: underline; color: var(--ck-dark); }
+.ck-coll-card__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: auto;
+  margin-bottom: 14px;
+}
+.ck-coll-price {
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--ck-coral);
+}
+.ck-coll-compare {
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  color: #A09080;
+  text-decoration: line-through;
+}
+
+/* Add to cart button */
+.ck-coll-add-btn {
+  width: 100%;
+  padding: 12px;
+  background: var(--ck-dark);
+  color: #FFFCF8;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Inter', sans-serif;
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.ck-coll-add-btn:hover   { background: var(--ck-olive); }
+.ck-coll-add-btn:disabled { opacity: 0.6; cursor: wait; }
+
+/* Load more */
+.ck-coll-load-more-wrap {
+  text-align: center;
+  padding: 48px 0 56px;
+}
+.ck-coll-load-more {
+  display: inline-flex;
+  align-items: center;
+  padding: 13px 36px;
+  border: 2px solid var(--ck-dark);
+  border-radius: 4px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ck-dark);
+  text-decoration: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.ck-coll-load-more:hover {
+  background: var(--ck-dark);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* Empty state */
+.ck-coll-empty {
+  text-align: center;
+  padding: 60px 24px;
+  font-family: 'Inter', sans-serif;
+  color: var(--ck-muted);
+  font-size: 15px;
+}
+
+/* ========================
+   RESPONSIVE
+   ======================== */
+@media (max-width: 990px) {
+  .ck-coll-hero__title { font-size: 36px; }
+  .ck-coll-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .ck-coll-toolbar { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 600px) {
+  .ck-coll-hero { padding: 40px 0 36px; }
+  .ck-coll-hero__title { font-size: 28px; }
+  .ck-coll-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .ck-coll-toolbar__left { gap: 10px; }
+  .ck-filter-pill { font-size: 12px; padding: 5px 12px; }
+  .ck-coll-grid-wrap { padding: 0 16px; }
+}

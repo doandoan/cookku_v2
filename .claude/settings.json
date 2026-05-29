@@ -3,7 +3,12 @@
     "allow": [
       "Bash(cmd /c \"nvm list 2>&1\")",
       "Read(//c/Users/Pc/Desktop/COOKKU/**)",
-      "Bash(powershell -Command \"Compress-Archive -Path 'cookku_v2\\\\*' -DestinationPath 'cookku_theme.zip' -Force\")"
+      "Bash(powershell -Command \"Compress-Archive -Path 'cookku_v2\\\\*' -DestinationPath 'cookku_theme.zip' -Force\")",
+      "Bash(powershell -Command \"Compress-Archive -Path '.\\\\*' -DestinationPath '..\\\\cookku_theme.zip' -Force\")",
+      "Bash(powershell -Command \"\\(Get-Item '..\\\\cookku_theme.zip'\\).Length / 1MB\")",
+      "Bash(powershell -Command \"Add-Type -Assembly System.IO.Compression.FileSystem; [System.IO.Compression.ZipFile]::OpenRead\\('c:\\\\Users\\\\Pc\\\\Desktop\\\\COOKKU\\\\cookku_theme.zip'\\).Entries | Select-Object -First 15 FullName\")",
+      "Bash(powershell -Command ' *)",
+      "Bash(powershell -Command 'Add-Type -Assembly System.IO.Compression.FileSystem; $z = [System.IO.Compression.ZipFile]::OpenRead\\('\\\\''c:\\\\Users\\\\Pc\\\\Desktop\\\\COOKKU\\\\cookku_theme.zip'\\\\''\\); $z.Entries | Where-Object { $_.FullName -like '\\\\''layout*'\\\\'' -or $_.FullName -like '\\\\''templates*'\\\\'' } | Select-Object FullName | Format-Table -AutoSize; $z.Dispose\\(\\)')"
     ]
   }
 }

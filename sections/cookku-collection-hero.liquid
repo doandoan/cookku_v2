@@ -1,0 +1,62 @@
+{{ 'cookku-collection.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign current_collection = collection
+  assign title_before = collection.metafields.custom.hero_title_before | default: section.settings.title_before
+  assign title_em     = collection.metafields.custom.hero_title_em     | default: section.settings.title_em
+-%}
+
+<!-- Breadcrumb -->
+<nav class="ck-breadcrumb" aria-label="Breadcrumb">
+  <a href="/">Home</a>
+  <span class="ck-breadcrumb__sep">›</span>
+  <span>{{ collection.title }}</span>
+</nav>
+
+<!-- Collection Hero -->
+<div class="ck-coll-hero">
+  <div class="ck-coll-hero__inner">
+    <p class="ck-coll-hero__eyebrow">{{ collection.title | upcase }}</p>
+    <h1 class="ck-coll-hero__title">
+      {{ title_before }} <em>{{ title_em }}</em>
+    </h1>
+    {% if collection.description != blank %}
+      <div class="ck-coll-hero__desc">{{ collection.description }}</div>
+    {% elsif section.settings.description != blank %}
+      <p class="ck-coll-hero__desc">{{ section.settings.description }}</p>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cookku Collection Hero",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Title and eyebrow are read from the collection. To customize the headline per collection, set metafields: custom.hero_title_before and custom.hero_title_em."
+    },
+    {
+      "type": "text",
+      "id": "title_before",
+      "label": "Default headline — before italic",
+      "default": "Smart tools for"
+    },
+    {
+      "type": "text",
+      "id": "title_em",
+      "label": "Default headline — italic word",
+      "default": "everyday cooking"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Default description (used if collection has no description)",
+      "default": "From morning juicing to weekend cocktails — hand-picked kitchen essentials that earn their place on your counter."
+    }
+  ],
+  "presets": [
+    { "name": "Cookku Collection Hero" }
+  ]
+}
+{% endschema %}

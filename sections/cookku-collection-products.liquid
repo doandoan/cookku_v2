@@ -1,0 +1,331 @@
+{{ 'cookku-collection.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
+  assign products_per_page = section.settings.products_per_page | default: 12
+-%}
+
+{%- paginate collection.products by products_per_page -%}
+
+<!-- Toolbar: count + filters + sort -->
+<div class="ck-coll-toolbar-wrap">
+  <div class="ck-coll-toolbar">
+
+    <!-- Left: count + filter pills -->
+    <div class="ck-coll-toolbar__left">
+      <span class="ck-coll-count">
+        {{ collection.all_products_count }}
+        {{ collection.all_products_count | pluralize: 'product', 'products' }}
+      </span>
+
+      <div class="ck-coll-filters" role="navigation" aria-label="Filter products">
+        <!-- All -->
+        <a
+          href="{{ collection.url }}{% if sort_by != collection.default_sort_by %}?sort_by={{ sort_by }}{% endif %}"
+          class="ck-filter-pill {% unless current_tags %}ck-filter-pill--active{% endunless %}"
+        >All</a>
+
+        <!-- Configurable filter blocks -->
+        {% for block in section.blocks %}
+          {%- if block.type == 'filter' -%}
+            {%- assign is_active = false -%}
+            {%- if current_tags contains block.settings.tag -%}
+              {%- assign is_active = true -%}
+            {%- endif -%}
+            <a
+              href="{% if is_active %}{{ collection.url }}{% else %}{{ collection.url }}/{{ block.settings.tag }}{% endif %}{% if sort_by != collection.default_sort_by %}?sort_by={{ sort_by }}{% endif %}"
+              class="ck-filter-pill {% if is_active %}ck-filter-pill--active{% endif %}"
+              {{ block.shopify_attributes }}
+            >{{ block.settings.label }}</a>
+          {%- endif -%}
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Right: Sort -->
+    <div class="ck-sort-wrap">
+      <span class="ck-sort-label">Sort:</span>
+      <select id="ck-sort-select" class="ck-sort-select" aria-label="Sort products">
+        <option value="best-selling"       {% if sort_by == 'best-selling' %}selected{% endif %}>Best Selling</option>
+        <option value="created-descending" {% if sort_by == 'created-descending' %}selected{% endif %}>Newest</option>
+        <option value="price-ascending"    {% if sort_by == 'price-ascending' %}selected{% endif %}>Price: Low to High</option>
+        <option value="price-descending"   {% if sort_by == 'price-descending' %}selected{% endif %}>Price: High to Low</option>
+        <option value="title-ascending"    {% if sort_by == 'title-ascending' %}selected{% endif %}>A–Z</option>
+      </select>
+    </div>
+
+  </div>
+</div>
+
+<!-- Product Grid -->
+<section class="ck-coll-grid-section">
+  <div class="ck-coll-grid-wrap">
+    {% if collection.products.size > 0 %}
+      <div class="ck-coll-grid" id="ck-coll-grid">
+        {% for product in collection.products %}
+          {%- liquid
+            assign badge_text = ''
+            assign badge_class = ''
+            if product.tags contains 'best-seller'
+              assign badge_text = 'BEST SELLER'
+              assign badge_class = 'ck-coll-badge--green'
+            elsif product.compare_at_price > product.price
+              assign disc = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price
+              assign badge_text = '-' | append: disc | append: '%'
+              assign badge_class = 'ck-coll-badge--red'
+            elsif product.tags contains 'new'
+              assign badge_text = 'NEW'
+              assign badge_class = 'ck-coll-badge--dark'
+            endif
+          -%}
+          <div class="ck-coll-card">
+            <!-- Image -->
+            <div class="ck-coll-card__image-wrap">
+              {% if badge_text != '' %}
+                <span class="ck-coll-badge {{ badge_class }}">{{ badge_text }}</span>
+              {% endif %}
+
+              <!-- Wishlist -->
+              <button
+                class="ck-coll-card__wishlist"
+                type="button"
+                data-product-id="{{ product.id }}"
+                aria-label="Add {{ product.title | escape }} to wishlist"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+              </button>
+
+              <a href="{{ product.url }}">
+                {% if product.featured_image %}
+                  {{
+                    product.featured_image
+                    | image_url: width: 500
+                    | image_tag:
+                      loading: 'lazy',
+                      alt: product.featured_image.alt | default: product.title | escape,
+                      width: 500
+                  }}
+                {% else %}
+                  <div class="ck-coll-card__img-placeholder">
+                    [ {{ product.title | truncate: 20 }} ]
+                  </div>
+                {% endif %}
+              </a>
+            </div>
+
+            <!-- Info -->
+            <div class="ck-coll-card__info">
+              <div class="ck-coll-card__rating">
+                ★★★★★
+                <span>{{ product.metafields.reviews.rating_count | default: 'New' }}</span>
+              </div>
+
+              <a href="{{ product.url }}" class="ck-coll-card__title">
+                {{ product.title }}
+              </a>
+
+              <div class="ck-coll-card__price-row">
+                <span class="ck-coll-price">{{ product.price | money }}</span>
+                {% if product.compare_at_price > product.price %}
+                  <s class="ck-coll-compare">{{ product.compare_at_price | money }}</s>
+                {% endif %}
+              </div>
+
+              {% if product.available %}
+                <button
+                  type="button"
+                  class="ck-coll-add-btn"
+                  data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                  data-has-variants="{{ product.has_only_default_variant | json }}"
+                  data-product-url="{{ product.url }}"
+                  aria-label="Add {{ product.title | escape }} to cart"
+                >ADD TO CART</button>
+              {% else %}
+                <button type="button" class="ck-coll-add-btn" disabled>SOLD OUT</button>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div><!-- /#ck-coll-grid -->
+
+      <!-- Pagination / Load More -->
+      {% if paginate.next %}
+        <div class="ck-coll-load-more-wrap">
+          <button
+            type="button"
+            class="ck-coll-load-more"
+            id="ck-load-more-btn"
+            data-next-url="{{ paginate.next.url }}"
+          >LOAD MORE PRODUCTS</button>
+        </div>
+      {% endif %}
+
+    {% else %}
+      <div class="ck-coll-empty">
+        <p>No products found in this collection.</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{%- endpaginate -%}
+
+<script>
+  (function () {
+    /* ---- Sort select ---- */
+    var sortSelect = document.getElementById('ck-sort-select');
+    if (sortSelect) {
+      sortSelect.addEventListener('change', function () {
+        var url = new URL(window.location.href);
+        url.searchParams.set('sort_by', this.value);
+        url.searchParams.delete('page');
+        window.location.href = url.toString();
+      });
+    }
+
+    /* ---- Add to Cart (collection cards) ---- */
+    function attachCartHandlers(scope) {
+      (scope || document).querySelectorAll('.ck-coll-add-btn:not([data-bound])').forEach(function (btn) {
+        btn.setAttribute('data-bound', '1');
+        btn.addEventListener('click', function () {
+          var isDefaultVariant = this.dataset.hasVariants === 'false' ||
+                                 this.dataset.hasVariants === 'true';
+
+          if (this.dataset.hasVariants === 'false') {
+            /* Multiple variants — go to product page */
+            window.location.href = this.dataset.productUrl;
+            return;
+          }
+
+          var variantId = parseInt(this.dataset.variantId, 10);
+          if (!variantId) { window.location.href = this.dataset.productUrl; return; }
+
+          var self = this;
+          var original = self.textContent;
+          self.disabled = true;
+          self.textContent = 'ADDING…';
+
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] })
+          })
+            .then(function (r) { return r.json(); })
+            .then(function () {
+              self.textContent = '✓ ADDED';
+              /* Update cart bubble */
+              fetch('/?sections=cart-icon-bubble')
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                  if (data['cart-icon-bubble']) {
+                    var parser = new DOMParser();
+                    var doc = parser.parseFromString(data['cart-icon-bubble'], 'text/html');
+                    var newBubble = doc.getElementById('cart-icon-bubble');
+                    var existing  = document.getElementById('cart-icon-bubble');
+                    if (newBubble && existing) existing.innerHTML = newBubble.innerHTML;
+                  }
+                });
+              setTimeout(function () { self.textContent = original; self.disabled = false; }, 2000);
+            })
+            .catch(function () { self.textContent = original; self.disabled = false; });
+        });
+      });
+    }
+    attachCartHandlers();
+
+    /* ---- Load More ---- */
+    var loadMoreBtn = document.getElementById('ck-load-more-btn');
+    if (loadMoreBtn) {
+      loadMoreBtn.addEventListener('click', function () {
+        var nextUrl = this.dataset.nextUrl;
+        if (!nextUrl) return;
+        var self = this;
+        self.disabled = true;
+        self.textContent = 'LOADING…';
+
+        fetch(nextUrl)
+          .then(function (r) { return r.text(); })
+          .then(function (html) {
+            var parser = new DOMParser();
+            var doc    = parser.parseFromString(html, 'text/html');
+            var newCards = doc.querySelectorAll('.ck-coll-card');
+            var grid = document.getElementById('ck-coll-grid');
+            newCards.forEach(function (card) {
+              grid.appendChild(card.cloneNode(true));
+            });
+            attachCartHandlers(grid);
+
+            var newBtn = doc.getElementById('ck-load-more-btn');
+            if (newBtn && newBtn.dataset.nextUrl) {
+              self.dataset.nextUrl = newBtn.dataset.nextUrl;
+              self.textContent = 'LOAD MORE PRODUCTS';
+              self.disabled = false;
+            } else {
+              self.parentElement.style.display = 'none';
+            }
+          })
+          .catch(function () {
+            self.textContent = 'LOAD MORE PRODUCTS';
+            self.disabled = false;
+          });
+      });
+    }
+
+    /* ---- Wishlist toggle (UI only) ---- */
+    document.querySelectorAll('.ck-coll-card__wishlist').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        this.classList.toggle('ck-wishlisted');
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Cookku Collection Products",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 6,
+      "max": 24,
+      "step": 3,
+      "label": "Products per page",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter",
+      "name": "Filter tab",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "New Arrivals"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Product tag to filter by",
+          "default": "new-arrivals",
+          "info": "Products must have this tag in Shopify Admin."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cookku Collection Products",
+      "blocks": [
+        { "type": "filter", "settings": { "label": "New Arrivals", "tag": "new-arrivals" } },
+        { "type": "filter", "settings": { "label": "Best Sellers", "tag": "best-seller" } },
+        { "type": "filter", "settings": { "label": "On Sale",      "tag": "sale" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
