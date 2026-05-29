@@ -1,40 +1,33 @@
 {
   "sections": {
-    "cart-items": {
-      "type": "main-cart-items",
+    "ck-main-cart": {
+      "type": "cookku-main-cart",
       "settings": {
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
+        "free_shipping_threshold": 35
       }
     },
-    "cart-footer": {
-      "type": "main-cart-footer",
+    "ck-frequently-bought": {
+      "type": "cookku-cart-frequently-bought",
       "settings": {
-        "color_scheme": "scheme-1",
-        "padding_top": 20,
-        "padding_bottom": 40
-      },
-      "blocks": {
-        "subtotal": {
-          "type": "subtotal",
-          "settings": {
-          }
-        },
-        "buttons": {
-          "type": "buttons",
-          "settings": {
-          }
-        }
-      },
-      "block_order": [
-        "subtotal",
-        "buttons"
-      ]
+        "eyebrow": "FREQUENTLY BOUGHT TOGETHER",
+        "title_before": "Complete your",
+        "title_em": "kitchen setup",
+        "collection": "all"
+      }
+    },
+    "ck-recently-loved": {
+      "type": "cookku-cart-recently-loved",
+      "settings": {
+        "eyebrow": "RECENTLY VIEWED",
+        "title_before": "You might also",
+        "title_em": "love",
+        "collection": "all"
+      }
     }
   },
   "order": [
-    "cart-items",
-    "cart-footer"
+    "ck-main-cart",
+    "ck-frequently-bought",
+    "ck-recently-loved"
   ]
 }

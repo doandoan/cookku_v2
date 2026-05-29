@@ -1,0 +1,461 @@
+{{ 'cookku-cart.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign total_compare_savings = 0
+  for item in cart.items
+    if item.variant.compare_at_price > item.price
+      assign item_savings = item.variant.compare_at_price | minus: item.price | times: item.quantity
+      assign total_compare_savings = total_compare_savings | plus: item_savings
+    endif
+  endfor
+
+  assign free_shipping_threshold = section.settings.free_shipping_threshold | times: 100
+  assign shipping_unlocked = false
+  if cart.total_price >= free_shipping_threshold or free_shipping_threshold == 0
+    assign shipping_unlocked = true
+  endif
+  assign shipping_remaining = free_shipping_threshold | minus: cart.total_price
+-%}
+
+<div class="ck-cart-page">
+
+  <!-- Page Header -->
+  <div class="ck-cart-header">
+    <p class="ck-cart-header__eyebrow">YOUR CART</p>
+    <h1 class="ck-cart-header__title">Almost <em>yours</em></h1>
+    <p class="ck-cart-header__subtitle" id="ck-cart-subtitle">
+      {% if cart.item_count > 0 %}
+        You have <strong>{{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %}</strong> waiting
+        &nbsp;·&nbsp;
+        {% if shipping_unlocked %}
+          <span class="ck-free-ship-check">Free shipping unlocked ✓</span>
+        {% else %}
+          Add <strong>{{ shipping_remaining | money }}</strong> more for free shipping
+        {% endif %}
+      {% else %}
+        Your cart is empty
+      {% endif %}
+    </p>
+  </div>
+
+  <!-- Progress Steps -->
+  <div class="ck-cart-steps" aria-label="Checkout progress">
+    <div class="ck-cart-step ck-cart-step--active">
+      <div class="ck-cart-step__circle">1</div>
+      <span class="ck-cart-step__label">Cart</span>
+    </div>
+    <div class="ck-cart-step__connector" aria-hidden="true"></div>
+    <div class="ck-cart-step">
+      <div class="ck-cart-step__circle">2</div>
+      <span class="ck-cart-step__label">Information</span>
+    </div>
+    <div class="ck-cart-step__connector" aria-hidden="true"></div>
+    <div class="ck-cart-step">
+      <div class="ck-cart-step__circle">3</div>
+      <span class="ck-cart-step__label">Shipping</span>
+    </div>
+    <div class="ck-cart-step__connector" aria-hidden="true"></div>
+    <div class="ck-cart-step">
+      <div class="ck-cart-step__circle">4</div>
+      <span class="ck-cart-step__label">Payment</span>
+    </div>
+  </div>
+
+  {% if cart.item_count > 0 %}
+
+    <!-- Two-Column Layout -->
+    <div class="ck-cart-layout">
+
+      <!-- LEFT: Cart Items -->
+      <div class="ck-cart-items-col">
+        <div class="ck-cart-items-box">
+          <div class="ck-cart-items-header">
+            <h2 class="ck-cart-items-header__title">Your items</h2>
+            <span class="ck-cart-items-header__count" id="ck-item-count">
+              {{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %} in cart
+            </span>
+          </div>
+
+          {% for item in cart.items %}
+            <div class="ck-cart-item" data-item-key="{{ item.key }}">
+              <!-- Image -->
+              <div class="ck-cart-item__image">
+                {% if item.image %}
+                  <img
+                    src="{{ item.image | image_url: width: 160 }}"
+                    alt="{{ item.image.alt | default: item.product_title | escape }}"
+                    loading="lazy"
+                    width="80"
+                    height="80"
+                  >
+                {% else %}
+                  <div class="ck-cart-item__image-placeholder">
+                    [ {{ item.product_title | truncate: 12 }} ]
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Details -->
+              <div class="ck-cart-item__details">
+                <a href="{{ item.url }}" class="ck-cart-item__title">
+                  {{ item.product_title }}
+                </a>
+                <div class="ck-cart-item__variant">
+                  {% unless item.variant_title == 'Default Title' %}
+                    {{ item.variant_title }}
+                    {% if item.sku != blank %} · {% endif %}
+                  {% endunless %}
+                  {% if item.sku != blank %}SKU: {{ item.sku }}{% endif %}
+                </div>
+
+                <div class="ck-cart-item__bottom-row">
+                  <!-- Quantity selector -->
+                  <div class="ck-cart-qty-selector">
+                    <button
+                      type="button"
+                      class="ck-cart-qty-btn"
+                      data-key="{{ item.key }}"
+                      data-action="minus"
+                      aria-label="Decrease quantity"
+                    >−</button>
+                    <input
+                      type="number"
+                      class="ck-cart-qty-input"
+                      data-key="{{ item.key }}"
+                      value="{{ item.quantity }}"
+                      min="0"
+                      aria-label="Quantity for {{ item.product_title | escape }}"
+                    >
+                    <button
+                      type="button"
+                      class="ck-cart-qty-btn"
+                      data-key="{{ item.key }}"
+                      data-action="plus"
+                      aria-label="Increase quantity"
+                    >+</button>
+                  </div>
+
+                  <div class="ck-cart-item-actions">
+                    <button
+                      type="button"
+                      class="ck-cart-remove"
+                      data-key="{{ item.key }}"
+                    >Remove</button>
+                    <button type="button" class="ck-cart-save" data-key="{{ item.key }}">
+                      Save for later
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Price -->
+              <div class="ck-cart-item__price-col">
+                <span class="ck-cart-item__price" data-line-price="{{ item.key }}">
+                  {{ item.final_line_price | money }}
+                </span>
+                {% if item.original_line_price > item.final_line_price %}
+                  <s class="ck-cart-item__compare">{{ item.original_line_price | money }}</s>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+
+          <div class="ck-cart-box-footer">
+            <a href="{{ routes.all_products_collection_url }}" class="ck-cart-continue">
+              ← Continue shopping
+            </a>
+            <span class="ck-cart-autosave">Updates auto-save</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Order Summary -->
+      <div class="ck-cart-summary-col">
+        <div class="ck-order-summary">
+          <h2 class="ck-order-summary__title">Order Summary</h2>
+
+          <!-- Free shipping banner -->
+          {% if shipping_unlocked %}
+            <div class="ck-order-summary__shipping-banner">
+              <span>🚚</span>
+              <span>You've unlocked <a href="#">Free US Shipping!</a></span>
+            </div>
+          {% else %}
+            <div class="ck-order-summary__shipping-banner" style="background:#FFF7ED;border-color:#F5D7B0;color:#7A4A10;">
+              <span>📦</span>
+              <span>Add <strong>{{ shipping_remaining | money }}</strong> more to unlock free shipping</span>
+            </div>
+          {% endif %}
+
+          <!-- Summary rows -->
+          <div class="ck-order-summary__rows">
+            <div class="ck-order-summary__row">
+              <span class="ck-order-summary__row-label">Subtotal</span>
+              <span class="ck-order-summary__row-value" id="ck-order-subtotal">
+                {{ cart.items_subtotal_price | money }}
+              </span>
+            </div>
+            {% if total_compare_savings > 0 %}
+              <div class="ck-order-summary__row">
+                <span class="ck-order-summary__row-label">Compare-at savings</span>
+                <span class="ck-order-summary__row-value ck-order-summary__row-value--savings" id="ck-compare-savings">
+                  −{{ total_compare_savings | money }}
+                </span>
+              </div>
+            {% endif %}
+            <div class="ck-order-summary__row">
+              <span class="ck-order-summary__row-label">Shipping</span>
+              <span class="ck-order-summary__row-value ck-order-summary__row-value--free">FREE</span>
+            </div>
+            <div class="ck-order-summary__row">
+              <span class="ck-order-summary__row-label">Estimated tax</span>
+              <span class="ck-order-summary__row-value ck-order-summary__row-value--muted">Calc. at checkout</span>
+            </div>
+          </div>
+
+          <hr class="ck-order-summary__divider">
+
+          <!-- Discount code -->
+          <div class="ck-order-summary__discount">
+            <input
+              type="text"
+              id="ck-discount-input"
+              class="ck-discount-input"
+              placeholder="Discount code"
+              aria-label="Discount code"
+            >
+            <button type="button" id="ck-discount-apply" class="ck-discount-apply">APPLY</button>
+          </div>
+          <p id="ck-discount-feedback" class="ck-discount-feedback"></p>
+
+          <hr class="ck-order-summary__divider">
+
+          <!-- Total -->
+          <div class="ck-order-summary__total-row">
+            <span class="ck-order-summary__total-label">Total</span>
+            <span class="ck-order-summary__total-price" id="ck-order-total">
+              {{ cart.total_price | money }}
+            </span>
+          </div>
+          <p class="ck-order-summary__total-note">USD · including discount</p>
+
+          <!-- Checkout buttons -->
+          <div class="ck-order-summary__buttons">
+            <a
+              href="{{ routes.checkout_url }}"
+              id="ck-checkout-btn"
+              class="ck-checkout-btn"
+              role="button"
+            >
+              PROCEED TO CHECKOUT →
+            </a>
+
+            {% if additional_checkout_buttons %}
+              <div class="ck-express-label">OR</div>
+              {{ content_for_additional_checkout_buttons }}
+            {% endif %}
+          </div>
+
+          <!-- Trust icons -->
+          <div class="ck-order-trust">
+            <div class="ck-order-trust-item">
+              <span class="ck-order-trust-item__icon">🔒</span>
+              <span class="ck-order-trust-item__label">SSL Secure</span>
+              <span class="ck-order-trust-item__sub">256-bit</span>
+            </div>
+            <div class="ck-order-trust-item">
+              <span class="ck-order-trust-item__icon">♻️</span>
+              <span class="ck-order-trust-item__label">30-Day</span>
+              <span class="ck-order-trust-item__sub">Returns</span>
+            </div>
+            <div class="ck-order-trust-item">
+              <span class="ck-order-trust-item__icon">🚚</span>
+              <span class="ck-order-trust-item__label">Free Ship</span>
+              <span class="ck-order-trust-item__sub">7–15 days</span>
+            </div>
+          </div>
+
+          <!-- Payment icons -->
+          <div class="ck-payment-icons">
+            <span class="ck-payment-chip">VISA</span>
+            <span class="ck-payment-chip">MC</span>
+            <span class="ck-payment-chip">AMEX</span>
+            <span class="ck-payment-chip">DISCOVER</span>
+            <span class="ck-payment-chip">PAYPAL</span>
+            <span class="ck-payment-chip">SHOP PAY</span>
+            <span class="ck-payment-chip">APPLE PAY</span>
+            <span class="ck-payment-chip">G PAY</span>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.ck-cart-layout -->
+
+  {% else %}
+
+    <!-- Empty Cart -->
+    <div class="ck-cart-layout" style="display:block; max-width:560px;">
+      <div class="ck-cart-empty">
+        <h2>Your cart is empty</h2>
+        <p>Looks like you haven't added anything yet.</p>
+        <a href="{{ routes.all_products_collection_url }}" class="cookku-btn cookku-btn--primary">
+          Start Shopping →
+        </a>
+      </div>
+    </div>
+
+  {% endif %}
+
+</div>
+
+<script>
+  (function () {
+    /* ---- Quantity buttons ---- */
+    document.querySelectorAll('.ck-cart-qty-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key    = this.dataset.key;
+        var action = this.dataset.action;
+        var input  = document.querySelector('.ck-cart-qty-input[data-key="' + key + '"]');
+        var current = parseInt(input.value) || 1;
+        var newQty  = action === 'plus' ? current + 1 : Math.max(0, current - 1);
+        input.value = newQty;
+        changeCartItem(key, newQty);
+      });
+    });
+
+    /* ---- Qty input direct edit ---- */
+    document.querySelectorAll('.ck-cart-qty-input').forEach(function (input) {
+      var timer;
+      input.addEventListener('change', function () {
+        clearTimeout(timer);
+        var key = this.dataset.key;
+        var qty = Math.max(0, parseInt(this.value) || 0);
+        this.value = qty;
+        timer = setTimeout(function () { changeCartItem(key, qty); }, 400);
+      });
+    });
+
+    /* ---- Remove buttons ---- */
+    document.querySelectorAll('.ck-cart-remove').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        changeCartItem(this.dataset.key, 0);
+      });
+    });
+
+    /* ---- Save for later (removes from cart in this implementation) ---- */
+    document.querySelectorAll('.ck-cart-save').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        changeCartItem(this.dataset.key, 0);
+      });
+    });
+
+    function changeCartItem(key, qty) {
+      fetch('/cart/change.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: key, quantity: qty })
+      })
+        .then(function (r) { return r.json(); })
+        .then(function (updatedCart) {
+          if (qty === 0) {
+            window.location.reload();
+            return;
+          }
+          refreshCartUI(updatedCart, key);
+        })
+        .catch(function () { window.location.reload(); });
+    }
+
+    function refreshCartUI(cart, changedKey) {
+      /* Item count */
+      var countEl = document.getElementById('ck-item-count');
+      if (countEl) countEl.textContent = cart.item_count + ' item' + (cart.item_count !== 1 ? 's' : '') + ' in cart';
+
+      /* Subtitle */
+      var subtitleEl = document.getElementById('ck-cart-subtitle');
+      if (subtitleEl) {
+        var freeThreshold = {{ section.settings.free_shipping_threshold | times: 100 }};
+        var unlocked = freeThreshold === 0 || cart.total_price >= freeThreshold;
+        var itemWord = 'You have <strong>' + cart.item_count + ' item' + (cart.item_count !== 1 ? 's' : '') + '</strong> waiting &nbsp;·&nbsp; ';
+        subtitleEl.innerHTML = itemWord + (unlocked
+          ? '<span class="ck-free-ship-check">Free shipping unlocked ✓</span>'
+          : 'Add <strong>' + formatMoney(freeThreshold - cart.total_price) + '</strong> more for free shipping');
+      }
+
+      /* Line prices */
+      var changedItem = cart.items.find(function (i) { return i.key === changedKey; });
+      if (changedItem) {
+        var priceEl = document.querySelector('[data-line-price="' + changedKey + '"]');
+        if (priceEl) priceEl.textContent = formatMoney(changedItem.final_line_price);
+      }
+
+      /* Subtotal / total */
+      var subtotalEl = document.getElementById('ck-order-subtotal');
+      var totalEl    = document.getElementById('ck-order-total');
+      if (subtotalEl) subtotalEl.textContent = formatMoney(cart.items_subtotal_price);
+      if (totalEl)    totalEl.textContent    = formatMoney(cart.total_price);
+
+      /* Compare savings recalc */
+      var totalSavings = 0;
+      cart.items.forEach(function (item) {
+        if (item.original_price > item.final_price) {
+          totalSavings += (item.original_price - item.final_price) * item.quantity;
+        }
+      });
+      var savingsEl = document.getElementById('ck-compare-savings');
+      if (savingsEl) savingsEl.textContent = '−' + formatMoney(totalSavings);
+
+      /* Cart bubble */
+      document.querySelectorAll('.cart-count-bubble span:first-child').forEach(function (el) {
+        el.textContent = cart.item_count;
+      });
+    }
+
+    function formatMoney(cents) {
+      return '$' + (cents / 100).toFixed(2);
+    }
+
+    /* ---- Discount code ---- */
+    var applyBtn = document.getElementById('ck-discount-apply');
+    if (applyBtn) {
+      applyBtn.addEventListener('click', function () {
+        var code = (document.getElementById('ck-discount-input') || {}).value;
+        if (code && code.trim()) {
+          var fb = document.getElementById('ck-discount-feedback');
+          if (fb) { fb.textContent = 'Code "' + code.trim() + '" will be applied at checkout.'; fb.style.display = 'block'; }
+        }
+      });
+    }
+
+    /* ---- Checkout with discount ---- */
+    var checkoutBtn = document.getElementById('ck-checkout-btn');
+    if (checkoutBtn) {
+      checkoutBtn.addEventListener('click', function (e) {
+        var codeInput = document.getElementById('ck-discount-input');
+        var code = codeInput ? codeInput.value.trim() : '';
+        if (code) {
+          e.preventDefault();
+          window.location.href = '/checkout?discount=' + encodeURIComponent(code);
+        }
+      });
+    }
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Cookku Cart",
+  "settings": [
+    {
+      "type": "number",
+      "id": "free_shipping_threshold",
+      "label": "Free shipping threshold (USD)",
+      "default": 35,
+      "info": "Set to 0 to always show 'Free shipping unlocked'."
+    }
+  ],
+  "presets": [
+    { "name": "Cookku Cart" }
+  ]
+}
+{% endschema %}

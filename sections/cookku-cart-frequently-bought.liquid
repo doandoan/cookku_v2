@@ -1,0 +1,89 @@
+{{ 'cookku-cart.css' | asset_url | stylesheet_tag }}
+
+{%- assign fbt_collection = collections[section.settings.collection] -%}
+
+{% if fbt_collection and fbt_collection.products_count > 0 %}
+<section class="ck-cart-fbt">
+  <div class="ck-cart-fbt__header">
+    {% if section.settings.eyebrow != blank %}
+      <p class="ck-cart-section-eyebrow">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+    <h2 class="ck-cart-section-title">
+      {{ section.settings.title_before }} <em>{{ section.settings.title_em }}</em>
+    </h2>
+  </div>
+
+  <div class="ck-cart-fbt__grid">
+    {% for product in fbt_collection.products limit: 3 %}
+      <div class="ck-fbt-card">
+        <div class="ck-fbt-card__image">
+          {% if product.featured_image %}
+            {{ product.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: product.title }}
+          {% else %}
+            <div class="ck-fbt-card__img-placeholder">[ {{ product.title | truncate: 10 }} ]</div>
+          {% endif %}
+        </div>
+        <div class="ck-fbt-card__info">
+          <p class="ck-fbt-card__title">{{ product.title }}</p>
+          <div class="ck-fbt-card__stars">★★★★★</div>
+          <p class="ck-fbt-card__price">{{ product.price | money }}</p>
+        </div>
+        <button
+          type="button"
+          class="ck-fbt-card__add-btn"
+          data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+          aria-label="Add {{ product.title | escape }} to cart"
+          {%- unless product.available -%}disabled{%- endunless -%}
+        >+</button>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<script>
+  (function () {
+    document.querySelectorAll('.ck-fbt-card__add-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var variantId = parseInt(this.dataset.variantId, 10);
+        if (!variantId) return;
+        var self = this;
+        self.disabled = true;
+        self.textContent = '✓';
+
+        fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: [{ id: variantId, quantity: 1 }] })
+        })
+          .then(function (r) { return r.json(); })
+          .then(function () {
+            window.location.reload();
+          })
+          .catch(function () {
+            self.disabled = false;
+            self.textContent = '+';
+          });
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Cookku Cart — Frequently Bought",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "FREQUENTLY BOUGHT TOGETHER" },
+    { "type": "text", "id": "title_before", "label": "Title — before italic", "default": "Complete your" },
+    { "type": "text", "id": "title_em", "label": "Title — italic word", "default": "kitchen setup" },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Products collection"
+    }
+  ],
+  "presets": [
+    { "name": "Cookku Cart — Frequently Bought" }
+  ]
+}
+{% endschema %}
