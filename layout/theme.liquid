@@ -296,9 +296,6 @@
         document.documentElement.classList.add('shopify-design-mode');
       }
     </script>
-
-    {{ 'cookku-custom.css' | asset_url | stylesheet_tag }}
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">

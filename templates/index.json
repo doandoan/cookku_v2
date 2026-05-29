@@ -3,324 +3,73 @@
     "image_banner": {
       "type": "image-banner",
       "blocks": {
-        "eyebrow": {
-          "type": "text",
-          "settings": {
-            "text": "<span class=\"ck-eyebrow\">Make Your Home Smarter</span>",
-            "text_style": "subtitle"
-          }
-        },
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Smart tools for the <em>modern American home</em>",
+            "heading": "Browse our latest products",
             "heading_size": "h0"
           }
         },
-        "subtext": {
-          "type": "text",
-          "settings": {
-            "text": "Hand-picked kitchen, home, and baby essentials — designed to simplify everyday life. Free US shipping. 30-day guarantee.",
-            "text_style": "body"
-          }
-        },
-        "buttons": {
+        "button": {
           "type": "buttons",
           "settings": {
-            "button_label_1": "SHOP BEST SELLERS",
-            "button_link_1": "shopify://collections/best-sellers",
-            "button_style_secondary_1": false,
-            "button_label_2": "LEARN MORE",
-            "button_link_2": "shopify://pages/about-us",
-            "button_style_secondary_2": true
-          }
-        },
-        "sub_cta": {
-          "type": "text",
-          "settings": {
-            "text": "Free shipping • No code needed",
-            "text_style": "subtitle"
+            "button_label_1": "Shop all",
+            "button_link_1": "shopify://collections/all",
+            "button_style_secondary_1": true,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
           }
         }
       },
-      "block_order": ["eyebrow", "heading", "subtext", "buttons", "sub_cta"],
+      "block_order": [
+        "heading",
+        "button"
+      ],
       "settings": {
-        "image_overlay_opacity": 30,
+        "image_overlay_opacity": 40,
         "image_height": "large",
-        "desktop_content_position": "middle-center",
-        "show_text_box": true,
+        "desktop_content_position": "bottom-center",
+        "show_text_box": false,
         "image_behavior": "none",
         "desktop_content_alignment": "center",
-        "color_scheme": "scheme-2",
+        "color_scheme": "scheme-3",
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": false,
-        "show_text_below": false,
-        "padding_top": 0,
-        "padding_bottom": 0
+        "show_text_below": false
       }
     },
-    "trust_badges": {
-      "type": "multicolumn",
-      "blocks": {
-        "col1": {
-          "type": "column",
-          "settings": {
-            "title": "<i class=\"ti ti-truck ck-trust-icon\"></i><br>Free US Shipping",
-            "text": "<p>On every order, no minimums</p>"
-          }
-        },
-        "col2": {
-          "type": "column",
-          "settings": {
-            "title": "<i class=\"ti ti-shield-check ck-trust-icon\"></i><br>30-Day Returns",
-            "text": "<p>Risk-free guarantee</p>"
-          }
-        },
-        "col3": {
-          "type": "column",
-          "settings": {
-            "title": "<i class=\"ti ti-lock ck-trust-icon\"></i><br>Secure Checkout",
-            "text": "<p>SSL encrypted payments</p>"
-          }
-        },
-        "col4": {
-          "type": "column",
-          "settings": {
-            "title": "<i class=\"ti ti-sparkles ck-trust-icon\"></i><br>Hand-Picked",
-            "text": "<p>Quality tested for US homes</p>"
-          }
-        }
-      },
-      "block_order": ["col1", "col2", "col3", "col4"],
-      "settings": {
-        "title": "",
-        "heading_size": "h3",
-        "image_width": "third",
-        "background_style": "none",
-        "column_alignment": "center",
-        "columns_desktop": 4,
-        "button_label": "",
-        "button_link": "",
-        "color_scheme": "scheme-1",
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "category_collections": {
-      "type": "collection-list",
-      "blocks": {
-        "kitchen": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "kitchen"
-          }
-        },
-        "home_tools": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "tools"
-          }
-        },
-        "baby_gifts": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "baby-gifts"
-          }
-        }
-      },
-      "block_order": ["kitchen", "home_tools", "baby_gifts"],
-      "settings": {
-        "eyebrow_text": "Three core collections",
-        "title": "Shop by <em>category</em>",
-        "heading_size": "h2",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "columns_desktop": 3,
-        "columns_mobile": "1",
-        "show_view_all": false,
-        "color_scheme": "scheme-1",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "featured_products": {
+    "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "eyebrow_text": "Our most-loved tools",
-        "title": "Featured <em>this week</em>",
+        "title": "Featured products",
         "heading_size": "h2",
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "collection": "best-sellers",
-        "products_to_show": 3,
-        "columns_desktop": 3,
+        "collection": "all",
+        "products_to_show": 8,
+        "columns_desktop": 4,
         "color_scheme": "scheme-1",
         "full_width": false,
         "show_view_all": true,
         "view_all_style": "solid",
         "enable_desktop_slider": false,
-        "swipe_on_mobile": true,
+        "swipe_on_mobile": false,
         "image_ratio": "adapt",
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
-        "show_rating": true,
+        "show_rating": false,
         "quick_add": "none",
         "columns_mobile": "2",
-        "padding_top": 36,
+        "padding_top": 44,
         "padding_bottom": 36
-      }
-    },
-    "brand_story": {
-      "type": "image-with-text",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Tools that <em>actually</em> work — every time",
-            "heading_size": "h2"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>We don't carry a thousand gadgets. We carry the ones we'd put in our own kitchens. Each product is tested in real US homes, sourced from trusted makers, and shipped free to your door.</p>"
-          }
-        },
-        "button": {
-          "type": "button",
-          "settings": {
-            "button_label": "EXPLORE COLLECTION →",
-            "button_link": "shopify://collections/all",
-            "button_style_secondary": false
-          }
-        }
-      },
-      "block_order": ["heading", "text", "button"],
-      "settings": {
-        "height": "adapt",
-        "desktop_image_width": "medium",
-        "layout": "image_first",
-        "desktop_content_position": "middle",
-        "desktop_content_alignment": "left",
-        "content_layout": "no-overlap",
-        "color_scheme": "scheme-4",
-        "mobile_content_alignment": "left",
-        "padding_top": 56,
-        "padding_bottom": 56
-      }
-    },
-    "brand_quote": {
-      "type": "rich-text",
-      "blocks": {
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p><em>\"Great kitchens don't need a thousand gadgets — just a few smart tools that work effortlessly, every time.\"</em></p>"
-          }
-        },
-        "caption": {
-          "type": "caption",
-          "settings": {
-            "caption": "— The Cookku Philosophy",
-            "text_style": "caption",
-            "text_size": "s"
-          }
-        }
-      },
-      "block_order": ["text", "caption"],
-      "settings": {
-        "desktop_content_position": "center",
-        "content_alignment": "center",
-        "color_scheme": "scheme-5",
-        "full_width": true,
-        "padding_top": 60,
-        "padding_bottom": 60
-      }
-    },
-    "why_cookku": {
-      "type": "multicolumn",
-      "blocks": {
-        "col1": {
-          "type": "column",
-          "settings": {
-            "title": "<i class=\"ti ti-checks ck-why-icon\"></i><br>Hand-picked Products",
-            "text": "<p>Every item personally selected and tested for real US homes.</p>"
-          }
-        },
-        "col2": {
-          "type": "column",
-          "settings": {
-            "title": "<i class=\"ti ti-package ck-why-icon\"></i><br>Free US Shipping",
-            "text": "<p>No minimums, no hidden fees. Delivered to your door, on us.</p>"
-          }
-        },
-        "col3": {
-          "type": "column",
-          "settings": {
-            "title": "<i class=\"ti ti-refresh ck-why-icon\"></i><br>30-Day Guarantee",
-            "text": "<p>Not satisfied? Email us for a full refund — no questions asked.</p>"
-          }
-        }
-      },
-      "block_order": ["col1", "col2", "col3"],
-      "settings": {
-        "title": "Why Cookku",
-        "heading_size": "h2",
-        "image_width": "third",
-        "background_style": "none",
-        "column_alignment": "center",
-        "columns_desktop": 3,
-        "button_label": "",
-        "button_link": "",
-        "color_scheme": "scheme-2",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 56,
-        "padding_bottom": 56
-      }
-    },
-    "email_signup": {
-      "type": "email-signup-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Get 10% Off <em>Your First Order</em>",
-            "heading_size": "h2"
-          }
-        },
-        "paragraph": {
-          "type": "paragraph",
-          "settings": {
-            "text": "<p>Smart home tips + early access to new arrivals.</p>"
-          }
-        },
-        "email_form": {
-          "type": "email_form",
-          "settings": {}
-        }
-      },
-      "block_order": ["heading", "paragraph", "email_form"],
-      "settings": {
-        "color_scheme": "scheme-3",
-        "full_width": true,
-        "padding_top": 56,
-        "padding_bottom": 56
       }
     }
   },
   "order": [
     "image_banner",
-    "trust_badges",
-    "category_collections",
-    "featured_products",
-    "brand_story",
-    "brand_quote",
-    "why_cookku",
-    "email_signup"
+    "featured_collection"
   ]
 }
