@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "cookku-hero": {
@@ -28,7 +37,11 @@
           }
         }
       },
-      "block_order": ["trust-1", "trust-2", "trust-3"],
+      "block_order": [
+        "trust-1",
+        "trust-2",
+        "trust-3"
+      ],
       "settings": {
         "eyebrow": "SMART TOOLS. HAPPY HOME.",
         "heading_line1": "Everyday products",
@@ -71,11 +84,15 @@
             "title": "Baby Gifts",
             "description": "Safe, practical, and made for precious moments.",
             "link_text": "Shop Baby Gifts",
-            "link": "shopify://collections/baby-gifts"
+            "link": "shopify://collections/mom-and-kids"
           }
         }
       },
-      "block_order": ["cat-1", "cat-2", "cat-3"],
+      "block_order": [
+        "cat-1",
+        "cat-2",
+        "cat-3"
+      ],
       "settings": {}
     },
     "cookku-featured-picks": {
@@ -123,7 +140,12 @@
           }
         }
       },
-      "block_order": ["trust-s-1", "trust-s-2", "trust-s-3", "trust-s-4"],
+      "block_order": [
+        "trust-s-1",
+        "trust-s-2",
+        "trust-s-3",
+        "trust-s-4"
+      ],
       "settings": {}
     },
     "cookku-philosophy": {
